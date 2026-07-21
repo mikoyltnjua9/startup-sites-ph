@@ -1,43 +1,82 @@
-# Astro Starter Kit: Minimal
+# Startup Sites PH
+
+Marketing site for Startup Sites PH, a Philippines-based web development
+studio. Built with [Astro](https://astro.build) as a static site, deployed to
+Hostinger shared hosting (no Node server on the host — see **Deployment**
+below).
+
+## Prerequisites
+
+- Node.js `20.20.x` or newer (see `package.json` → `engines`). Astro is
+  pinned to `^4.16.0` in this project specifically because Astro 5+ requires
+  Node ≥ 22.12 — if you upgrade Node system-wide, the Astro version can be
+  bumped too.
+- npm (ships with Node)
+
+## Setup
 
 ```sh
-npm create astro@latest -- --template minimal
+git clone https://github.com/mikoyltnjua9/startup-sites-ph.git
+cd startup-sites-ph
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The dev server runs at `http://localhost:4321`.
 
-## 🚀 Project Structure
+## Scripts
 
-Inside of your Astro project, you'll see the following folders and files:
+| Command                | Action                                                |
+| :---------------------- | :----------------------------------------------------- |
+| `npm run dev`            | Starts the local dev server with hot reload            |
+| `npm run build`           | Builds the static site to `./dist/`                    |
+| `npm run preview`         | Serves the built `./dist/` locally, for a final check  |
+| `npm run astro check`     | Type-checks all `.astro` files                          |
+| `npx tsc --noEmit`        | Type-checks the standalone `.ts` files (e.g. `site.ts`) |
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/     # Nav, Hero, About, Team, Work, Capabilities, Services,
+│                    # Testimonials, Faq, Cta, Footer
+├── layouts/
+│   └── BaseLayout.astro   # <html>/<head> shell, fonts, anti-FOUC theme script
+├── pages/
+│   ├── index.astro        # one-page homepage
+│   └── contact.astro      # standalone Contact page
+├── scripts/
+│   └── site.ts            # single bundled script: nav dock/undock, dark
+│                           # mode, scroll reveals, hero canvas background,
+│                           # Work section pin/drag, testimonial carousel, etc.
+└── styles/
+    └── global.css          # design tokens (colors, fonts) + shared utility
+                              # classes (.btn-warm, .warm-card, .section-inner)
+public/
+├── icons/            # hero icon images
+└── videos/            # Work section background video
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+This site builds to static HTML/CSS/JS — Hostinger's shared hosting plan
+does **not** run a Node server, so there is no server-side deploy step:
 
-Any static assets, like images, can be placed in the `public/` directory.
+1. `npm run build`
+2. Upload the contents of `./dist/` to your Hostinger `public_html/` (or
+   equivalent) directory via FTP or the Hostinger File Manager.
 
-## 🧞 Commands
+## Known placeholders
 
-All commands are run from the root of the project, from a terminal:
+A few things still need real content/config before launch:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Contact form** (`src/pages/contact.astro`) posts to a placeholder
+  Formspree endpoint (`https://formspree.io/f/your-form-id`). Sign up at
+  [formspree.io](https://formspree.io) (or a similar static-form service) and
+  swap in your real endpoint.
+- Pricing figures in `src/components/Services.astro` (`[₱PRICE]`)
+- Client logos/testimonials in `src/components/Nav.astro` and
+  `src/components/Testimonials.astro`
+- Team photos in `src/components/Team.astro` (currently colored-initial
+  placeholders)
+- The `[X]` "sites shipped" stat in `src/components/Nav.astro`
