@@ -1,0 +1,473 @@
+---
+---
+
+<section class="hero" id="home">
+  <canvas class="hero-network" data-hero-network aria-hidden="true"></canvas>
+
+  <div class="hero-blobs" aria-hidden="true">
+    <div class="blob-slot blob-slot--coral">
+      <img class="blob" data-blob src="/icons/rocket-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--blue">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--mint">
+      <img class="blob" data-blob src="/icons/saturn-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--yellow">
+      <img class="blob" data-blob src="/icons/mercury-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--lavender">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--spark-a">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--spark-b">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--spark-c">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+    <div class="blob-slot blob-slot--spark-d">
+      <img class="blob" data-blob src="/icons/stars-small.png" alt="" />
+    </div>
+  </div>
+
+  <div class="section-inner hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow-warm" data-hero-in><span class="eyebrow-dot"></span>Startup Sites PH — Web Dev Studio</p>
+      <h1 class="hero-title-warm" data-hero-in>
+        We draft, build,<br />
+        and launch the sites<br />
+        startups grow on.
+      </h1>
+      <p class="hero-sub-warm" data-hero-in>
+        A Philippines-based Webflow &amp; web development team for founders who need
+        a site that looks considered, loads fast, and ships on schedule.
+      </p>
+      <div class="hero-actions-warm" data-hero-in>
+        <a class="btn-warm btn-warm--primary" href="/contact">Start a Project</a>
+        <a class="btn-warm btn-warm--ghost" href="#work">See the Work</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" data-hero-in>
+      <div class="hero-mockup-wrap">
+        <div class="hero-mockup" data-hero-mockup>
+          <div class="mock-nav" data-mock-block>
+            <i class="dot dot--coral"></i><i class="dot dot--blue"></i><i class="dot dot--mint"></i>
+          </div>
+          <div class="mock-hero" data-mock-block>
+            <span>HERO</span>
+          </div>
+          <div class="mock-row" data-mock-block>
+            <div class="mock-card"></div>
+            <div class="mock-card"></div>
+            <div class="mock-card"></div>
+          </div>
+          <div class="mock-band" data-mock-block>
+            <span>FEATURES</span>
+          </div>
+          <div class="mock-footer" data-mock-block>
+            <span>FOOTER</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    background: var(--a-bg);
+    color: var(--a-ink);
+    overflow: clip;
+  }
+
+  /* Sits behind .hero-blobs purely via DOM order (both are z-index: 0) —
+     see initHeroNetwork in site.ts for the dot-network drawing/animation. */
+  .hero-network {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .hero-blobs {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Two-layer structure: .blob-slot owns position + the idle CSS float
+     (transform: translateY/scale via @keyframes); the inner .blob owns
+     its own independent transform, which is what GSAP's cursor-repel
+     effect animates. Keeping them on separate elements means the CSS
+     animation and the JS tween never fight over the same `transform`. */
+  .blob-slot {
+    position: absolute;
+    animation: blobFloat 6s ease-in-out infinite;
+  }
+
+  .blob {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    will-change: transform;
+  }
+
+  .blob-slot--coral {
+    top: 14%;
+    left: 8%;
+    width: 130px;
+    height: 130px;
+  }
+  .blob-slot--coral .blob {
+    filter: drop-shadow(0 18px 30px rgba(255, 90, 70, 0.4));
+  }
+
+  .blob-slot--blue {
+    top: 66%;
+    left: 13%;
+    width: 76px;
+    height: 76px;
+    animation-duration: 7s;
+    animation-delay: -1.5s;
+  }
+  .blob-slot--blue .blob {
+    filter: drop-shadow(0 14px 24px rgba(255, 201, 77, 0.4));
+  }
+
+  .blob-slot--mint {
+    top: 18%;
+    right: 11%;
+    width: 96px;
+    height: 96px;
+    animation-duration: 5.5s;
+    animation-delay: -3s;
+  }
+  .blob-slot--mint .blob {
+    filter: drop-shadow(0 16px 28px rgba(230, 170, 60, 0.4));
+  }
+
+  .blob-slot--yellow {
+    top: 58%;
+    right: 7%;
+    width: 140px;
+    height: 140px;
+    animation-duration: 8s;
+    animation-delay: -2s;
+  }
+  .blob-slot--yellow .blob {
+    filter: drop-shadow(0 18px 30px rgba(90, 90, 100, 0.35));
+  }
+
+  .blob-slot--lavender {
+    top: 84%;
+    left: 47%;
+    width: 64px;
+    height: 64px;
+    animation-duration: 6.5s;
+    animation-delay: -4s;
+  }
+  .blob-slot--lavender .blob {
+    filter: drop-shadow(0 14px 24px rgba(155, 140, 255, 0.4));
+  }
+
+  /* Extra sparkle accents at the spots called out in review */
+  .blob-slot--spark-a {
+    top: 54%;
+    left: 5%;
+    width: 48px;
+    height: 48px;
+    animation-duration: 6.8s;
+    animation-delay: -0.8s;
+  }
+
+  .blob-slot--spark-b {
+    top: 55%;
+    left: 49%;
+    width: 42px;
+    height: 42px;
+    animation-duration: 5.8s;
+    animation-delay: -2.4s;
+  }
+
+  .blob-slot--spark-c {
+    top: 43%;
+    right: 3%;
+    width: 46px;
+    height: 46px;
+    animation-duration: 7.4s;
+    animation-delay: -3.6s;
+  }
+
+  .blob-slot--spark-d {
+    top: 80%;
+    left: 73%;
+    width: 42px;
+    height: 42px;
+    animation-duration: 6.2s;
+    animation-delay: -1.2s;
+  }
+
+  .blob-slot--spark-a .blob,
+  .blob-slot--spark-b .blob,
+  .blob-slot--spark-c .blob,
+  .blob-slot--spark-d .blob {
+    filter: drop-shadow(0 10px 18px rgba(255, 201, 77, 0.4));
+  }
+
+  @keyframes blobFloat {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-18px) scale(1.03);
+    }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+    max-width: 1240px;
+  }
+
+  .hero-copy {
+    text-align: left;
+  }
+
+  .hero-title-warm {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-display-warm);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 6.4vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--a-ink);
+  }
+
+  .hero-sub-warm {
+    margin: 1.5rem 0 0;
+    max-width: 42ch;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    line-height: 1.55;
+    color: var(--a-muted);
+  }
+
+  .hero-actions-warm {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Right column: the interactive device mockup */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    perspective: 1400px;
+  }
+
+  .hero-mockup-wrap {
+    width: min(100%, 420px);
+  }
+
+  .hero-mockup {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-radius: 28px;
+    background: var(--a-card);
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    box-shadow:
+      0 50px 90px -36px var(--a-shadow),
+      0 12px 30px -16px rgba(29, 29, 31, 0.1);
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .mock-nav {
+    flex: 0 0 auto;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(29, 29, 31, 0.03);
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 0.65rem;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  .dot--coral {
+    background: var(--a-coral);
+  }
+  .dot--blue {
+    background: var(--a-blue);
+  }
+  .dot--mint {
+    background: var(--a-mint);
+  }
+
+  .mock-hero {
+    flex: 2.2;
+    border-radius: 12px;
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    background: linear-gradient(135deg, rgba(255, 107, 91, 0.14), rgba(77, 163, 255, 0.08));
+    display: flex;
+    align-items: flex-end;
+    padding: 0.65rem;
+  }
+
+  .mock-row {
+    flex: 1.1;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .mock-card {
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    background: rgba(29, 29, 31, 0.025);
+  }
+
+  .mock-band {
+    flex: 1.5;
+    border-radius: 12px;
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    background: rgba(52, 199, 154, 0.09);
+    display: flex;
+    align-items: center;
+    padding: 0 0.65rem;
+  }
+
+  .mock-footer {
+    flex: 0 0 auto;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(29, 29, 31, 0.04);
+    display: flex;
+    align-items: center;
+    padding: 0 0.65rem;
+  }
+
+  .mock-hero span,
+  .mock-band span,
+  .mock-footer span {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--a-muted);
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-copy {
+      text-align: center;
+    }
+
+    .hero-actions-warm {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .hero-mockup-wrap {
+      width: min(78vw, 360px);
+    }
+
+    /* Desktop positions are tuned for the two-column layout; once it
+       stacks, those percentages land on top of the (now vertically
+       centered) mockup and headline instead of beside them. Pin the
+       four main icons to fixed corners — clear of the mobile nav bar
+       at the top and the section padding at the bottom — regardless of
+       how tall the stacked content gets, and drop the smaller sparkle
+       accents entirely rather than fight for space with a screen this
+       narrow. */
+    .blob-slot--coral,
+    .blob-slot--blue,
+    .blob-slot--mint,
+    .blob-slot--yellow {
+      width: 48px;
+      height: 48px;
+    }
+
+    .blob-slot--coral {
+      top: 68px;
+      left: 12px;
+      right: auto;
+      bottom: auto;
+    }
+
+    .blob-slot--mint {
+      top: 68px;
+      right: 12px;
+      left: auto;
+      bottom: auto;
+    }
+
+    .blob-slot--blue {
+      top: auto;
+      bottom: 20px;
+      left: 16px;
+    }
+
+    .blob-slot--yellow {
+      top: auto;
+      bottom: 20px;
+      right: 16px;
+      left: auto;
+    }
+
+    .blob-slot--lavender,
+    .blob-slot--spark-a,
+    .blob-slot--spark-b,
+    .blob-slot--spark-c,
+    .blob-slot--spark-d {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero-inner {
+      padding-top: 6rem;
+    }
+  }
+</style>

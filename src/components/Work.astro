@@ -1,0 +1,503 @@
+---
+const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender'] as const;
+
+const projects = [
+  { num: '01', tags: ['Webflow', 'GSAP', 'SEO'], name: '[Client Name]', blurb: '[Placeholder] — a seed-stage fintech landing page built to pass investor scrutiny and convert waitlist signups.' },
+  { num: '02', tags: ['CMS', 'API'], name: '[Client Name]', blurb: '[Placeholder] — a marketplace startup’s CMS-driven site handling hundreds of vendor listings.' },
+  { num: '03', tags: ['Webflow', 'Motion'], name: '[Client Name]', blurb: '[Placeholder] — a DTC brand’s launch site with scroll-driven product storytelling.' },
+  { num: '04', tags: ['CMS', 'Localization'], name: '[Client Name]', blurb: '[Placeholder] — a two-language site for a logistics startup expanding into Visayas and Mindanao.' },
+  { num: '05', tags: ['Performance', 'SEO'], name: '[Client Name]', blurb: '[Placeholder] — a rebuild that cut load time from 6s to under 1s and doubled organic traffic in 90 days.' },
+  { num: '06', tags: ['Webflow', 'Integrations'], name: '[Client Name]', blurb: '[Placeholder] — a SaaS site wired into HubSpot and Calendly for a fully automated sales funnel.' },
+  { num: '07', tags: ['Astro', 'SEO'], name: '[Client Name]', blurb: '[Placeholder] — a static-first marketing site rebuilt for sub-second load times ahead of a funding round.' },
+  { num: '08', tags: ['Webflow', 'CMS'], name: '[Client Name]', blurb: '[Placeholder] — a multi-location services site with a location finder and booking flow.' },
+  { num: '09', tags: ['GSAP', 'Motion'], name: '[Client Name]', blurb: '[Placeholder] — a product launch microsite built around a single scroll-driven narrative.' },
+  { num: '10', tags: ['CMS', 'API'], name: '[Client Name]', blurb: '[Placeholder] — a subscription brand’s site with live inventory pulled from their commerce backend.' },
+].map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
+---
+
+<section class="work" id="work">
+  <div class="work-head section-inner">
+    <p class="eyebrow-warm eyebrow-warm--on-dark" data-reveal><span class="eyebrow-dot"></span>Selected Work</p>
+    <h2 class="work-title warm-title warm-title--on-dark" data-reveal>Built to launch,<br />made to perform.</h2>
+    <p class="work-sub" data-reveal>
+      Placeholder case studies below — swap in real client names, videos, and
+      outcomes once projects are ready to publish.
+    </p>
+  </div>
+
+  <div class="work-viewport" data-work-viewport>
+    <ul class="work-track" data-work-track>
+      {
+        projects.map((p) => (
+          <li class={`work-card work-card--${p.accent}`} data-work-card>
+            <video
+              class="work-card-video"
+              src="/videos/work-placeholder.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              aria-hidden="true"
+            />
+            <div class="work-card-overlay" aria-hidden="true" />
+
+            <div class="work-card-top">
+              <span class="work-num">{p.num}</span>
+              <ul class="work-tags">
+                {p.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="device-wrap">
+              <div class="device">
+                <div class="device-screen">
+                  <div class="device-shot" data-device-shot>
+                    <div class="shot-nav">
+                      <i /><i /><i />
+                    </div>
+                    <div class="shot-hero">
+                      <span>HERO</span>
+                    </div>
+                    <div class="shot-block shot-block--wide">
+                      <span>SECTION</span>
+                    </div>
+                    <div class="shot-row">
+                      <div class="shot-block">
+                        <span>01</span>
+                      </div>
+                      <div class="shot-block">
+                        <span>02</span>
+                      </div>
+                      <div class="shot-block">
+                        <span>03</span>
+                      </div>
+                    </div>
+                    <div class="shot-block shot-block--wide">
+                      <span>TESTIMONIALS</span>
+                    </div>
+                    <div class="shot-row">
+                      <div class="shot-block">
+                        <span>04</span>
+                      </div>
+                      <div class="shot-block">
+                        <span>05</span>
+                      </div>
+                    </div>
+                    <div class="shot-footer">
+                      <span>FOOTER</span>
+                    </div>
+                  </div>
+                  <div class="device-hint" aria-hidden="true">Hover to preview</div>
+                </div>
+                <div class="device-stand" aria-hidden="true">
+                  <i />
+                  <b />
+                </div>
+              </div>
+            </div>
+
+            <div class="work-card-foot">
+              <h3>{p.name}</h3>
+              <p>{p.blurb}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .work {
+    position: relative;
+    background: var(--a-surface-dark);
+    color: #fff;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.25rem 0;
+  }
+
+  .work-head {
+    /* .section-inner's shared `margin: 0 auto` centers a max-width block in
+       normal flow, but inside .work's flex column it instead triggers
+       flexbox's auto-margin rule (shrink-to-fit-content + center) instead of
+       stretching full width like every other section. Neither margin below
+       is `auto`, which sidesteps that — but that also means the sidebar
+       clearance section-inner normally provides via its own auto-margin
+       trick needs to be re-applied explicitly here (>=900px only, to match
+       where the sidebar actually exists). */
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 900px) {
+    .work-head {
+      margin-left: var(--rig-w);
+    }
+  }
+
+  .work-title {
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    margin-top: 0.5rem;
+    max-width: 16ch;
+  }
+
+  .work-sub {
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 48ch;
+    margin-top: 0.65rem;
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .work-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    cursor: grab;
+    /* Let vertical swipes fall through to normal page scroll; horizontal
+       motion is handled entirely by the JS pointer-drag handler instead of
+       native touch-scroll, which was fighting the page's vertical scroll
+       on some mobile browsers inside this height:100svh section. */
+    touch-action: pan-y;
+  }
+
+  .work-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-viewport.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
+
+  /* Hidden (not visible) while pinned: cards translate horizontally right
+     underneath the fixed sidebar over the course of the whole scroll-jack,
+     not just at the starting position — the viewport's own box (offset
+     below) needs to actually clip them there, not just rely on the
+     sidebar's z-index painting over whatever happens to be behind it. */
+  .work-viewport.is-pinned {
+    overflow: hidden;
+    cursor: default;
+    touch-action: auto;
+  }
+
+  @media (min-width: 900px) {
+    .work-viewport {
+      margin-left: var(--rig-w);
+      width: calc(100% - var(--rig-w));
+    }
+  }
+
+  .work-track {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--edge);
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+  }
+
+  .work-card {
+    position: relative;
+    scroll-snap-align: start;
+    flex: 0 0 480px;
+    width: 480px;
+    height: 680px;
+    background: #242426;
+    border-radius: 28px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .work-card-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .work-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba(29, 29, 31, 0.55) 0%,
+      rgba(29, 29, 31, 0.65) 55%,
+      rgba(29, 29, 31, 0.92) 100%
+    );
+  }
+
+  .work-card-top,
+  .device-wrap,
+  .work-card-foot {
+    position: relative;
+    z-index: 2;
+  }
+
+  .work-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .work-num {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .work-card--coral .work-num {
+    color: var(--a-coral);
+  }
+  .work-card--blue .work-num {
+    color: var(--a-blue);
+  }
+  .work-card--mint .work-num {
+    color: var(--a-mint);
+  }
+  .work-card--yellow .work-num {
+    color: var(--a-yellow);
+  }
+  .work-card--lavender .work-num {
+    color: var(--a-lavender);
+  }
+
+  .work-tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .work-tags li {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.65rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .device-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0;
+  }
+
+  /* Monitor mockup */
+  .device {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .device-screen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    background: #1c1c1e;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 40px -26px rgba(0, 0, 0, 0.6);
+  }
+
+  .device-stand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .device-stand i {
+    width: 10px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.14);
+    font-style: normal;
+  }
+
+  .device-stand b {
+    width: 84px;
+    height: 7px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.14);
+    margin-top: 2px;
+    font-weight: normal;
+  }
+
+  .device-hint {
+    position: absolute;
+    inset: auto 0 0.6rem 0;
+    text-align: center;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    opacity: 1;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+
+  .work-card:hover .device-hint {
+    opacity: 0;
+  }
+
+  /* Fake wireframe "screenshot" that scrolls into view on hover */
+  .device-shot {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 260%;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    will-change: transform;
+  }
+
+  .shot-nav {
+    height: 7%;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0 0.5rem;
+  }
+
+  .shot-nav i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    font-style: normal;
+  }
+
+  .work-card--coral .shot-nav i:first-child {
+    background: var(--a-coral);
+  }
+  .work-card--blue .shot-nav i:first-child {
+    background: var(--a-blue);
+  }
+  .work-card--mint .shot-nav i:first-child {
+    background: var(--a-mint);
+  }
+  .work-card--yellow .shot-nav i:first-child {
+    background: var(--a-yellow);
+  }
+  .work-card--lavender .shot-nav i:first-child {
+    background: var(--a-lavender);
+  }
+
+  .shot-nav i:not(:first-child) {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .shot-hero {
+    height: 26%;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 70%);
+    display: flex;
+    align-items: flex-end;
+    padding: 0.5rem;
+  }
+
+  .shot-block {
+    flex: 1;
+    height: 14%;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: flex-end;
+    padding: 0.4rem;
+  }
+
+  .shot-block--wide {
+    height: 18%;
+    min-height: 52px;
+  }
+
+  .shot-row {
+    display: flex;
+    gap: 0.4rem;
+    height: 16%;
+    min-height: 46px;
+    flex-shrink: 0;
+  }
+
+  .shot-row .shot-block {
+    height: 100%;
+  }
+
+  .shot-footer {
+    height: 10%;
+    min-height: 30px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+
+  .shot-hero span,
+  .shot-block span,
+  .shot-footer span {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .work-card-foot {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  .work-card-foot h3 {
+    font-family: var(--font-display-warm);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .work-card-foot p {
+    margin-top: 0.6rem;
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.55;
+    font-size: 0.88rem;
+  }
+</style>

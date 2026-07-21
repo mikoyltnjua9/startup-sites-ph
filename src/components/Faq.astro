@@ -1,0 +1,134 @@
+---
+const faqs = [
+  {
+    q: 'How long does a typical build take?',
+    a: 'Starter Builds usually launch in 1–2 weeks once content and assets are ready. Custom Projects vary by scope — you’ll get a timeline after the discovery call.',
+  },
+  {
+    q: 'Do you design, or only develop?',
+    a: 'We handle both, but we can also build from an existing Figma/design file if you already have one you like.',
+  },
+  {
+    q: 'Can I edit the site myself after launch?',
+    a: 'Yes. Every build ships with a CMS setup and a short editor walkthrough so your team can update content without touching code.',
+  },
+  {
+    q: 'What if I only need ongoing small changes?',
+    a: 'That’s exactly what the Ongoing Support retainer is for — a fixed monthly hour block instead of one-off invoices for every small request.',
+  },
+  {
+    q: 'Do you work with startups outside the Philippines?',
+    a: 'Yes — we’re PH-based but work async with founders across time zones. Most communication happens over Slack/email plus a weekly call.',
+  },
+];
+---
+
+<section class="faq section" id="faq">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>FAQ</p>
+    <h2 class="faq-title warm-title" data-reveal>Questions, answered<br />before you ask.</h2>
+
+    <div class="faq-list">
+      {
+        faqs.map((f) => (
+          <details class="faq-item" data-reveal>
+            <summary>
+              <span>{f.q}</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--a-bg);
+  }
+
+  .faq-title {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    margin-top: 1rem;
+    max-width: 16ch;
+  }
+
+  .faq-list {
+    max-width: 760px;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    background: var(--a-card);
+    border-radius: 18px;
+    padding: 0 1.5rem;
+    box-shadow: 0 16px 36px -30px var(--a-shadow);
+  }
+
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--a-ink);
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--a-coral);
+    border-radius: 2px;
+    transition: transform 0.25s var(--ease-bounce);
+  }
+
+  .faq-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .faq-icon::after {
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    transform: translateX(-50%);
+  }
+
+  .faq-item[open] .faq-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq-item p {
+    padding-bottom: 1.4rem;
+    font-family: var(--font-body);
+    color: var(--a-muted);
+    line-height: 1.55;
+    max-width: 58ch;
+  }
+</style>

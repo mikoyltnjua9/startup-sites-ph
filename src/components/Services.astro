@@ -1,0 +1,219 @@
+---
+const tiers = [
+  {
+    name: 'Ongoing Support',
+    price: '[₱PRICE]',
+    unit: '/ month, [X] hrs',
+    desc: 'A dedicated developer on retainer. Whatever the site needs, handled — minimum 3-month commitment.',
+    features: [
+      'New pages, sections, and features',
+      'Campaign-driven updates',
+      'Maintenance, bug fixes, content updates',
+      'Technical SEO & performance passes',
+      'Unused hours roll over (up to 3 months)',
+    ],
+    footnote: 'For brands that need continuous, long-term collaboration.',
+    cta: 'Talk About Retainer',
+    featured: false,
+  },
+  {
+    name: 'Starter Build',
+    price: '[₱PRICE]',
+    unit: 'one-time',
+    desc: 'A clean site ready to launch in 1–2 weeks. For founders who need a solid presence without the complexity.',
+    features: [
+      'Up to 6 pages',
+      'CMS setup',
+      'Mid-level animations & interactions',
+      'Technical SEO setup',
+      'Launch within 1–2 weeks',
+      'Editor training after launch',
+    ],
+    footnote: 'For new sites or migrations that need a fast, clean start.',
+    cta: 'Start This Build',
+    featured: true,
+  },
+  {
+    name: 'Custom Project',
+    price: 'Book a Call',
+    unit: '',
+    desc: 'High-end development for complex scopes. Every project is different, so every quote starts with a conversation.',
+    features: [
+      'Advanced interaction & animation systems',
+      'Scalable CMS architecture, multi-collection',
+      'Complex layouts & modular components',
+      'Integration-ready, API-driven structure',
+      '14 days post-launch support included',
+    ],
+    footnote: 'For projects that go beyond the basics.',
+    cta: 'Book a Call',
+    featured: false,
+  },
+];
+---
+
+<section class="services section" id="services">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Services</p>
+    <h2 class="services-title warm-title" data-reveal>Same standard,<br />sized to what you need now.</h2>
+
+    <div class="tier-grid">
+      {
+        tiers.map((t) => (
+          <article class:list={['tier-card', { 'tier-card--featured': t.featured }]} data-reveal>
+            {t.featured && <span class="tier-flag">Most Booked</span>}
+            <h3>{t.name}</h3>
+            <p class="tier-price">
+              {t.price}
+              {t.unit && <span>{t.unit}</span>}
+            </p>
+            <p class="tier-desc">{t.desc}</p>
+            <ul class="tier-features">
+              {t.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+            <p class="tier-footnote">{t.footnote}</p>
+            <a
+              class:list={[
+                'btn-warm',
+                'tier-cta',
+                t.featured ? 'btn-warm--primary' : 'btn-warm--ghost',
+              ]}
+              href="/contact"
+            >
+              {t.cta}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--a-bg);
+  }
+
+  .services-title {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    margin-top: 1rem;
+    max-width: 18ch;
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    align-items: stretch;
+  }
+
+  .tier-card {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--a-card);
+    border-radius: 28px;
+    box-shadow: 0 20px 45px -30px var(--a-shadow);
+  }
+
+  .tier-card--featured {
+    box-shadow: 0 30px 60px -30px rgba(255, 107, 91, 0.35);
+    outline: 2px solid var(--a-coral);
+    outline-offset: -2px;
+  }
+
+  .tier-flag {
+    position: absolute;
+    top: -0.75rem;
+    left: 2rem;
+    background: var(--a-coral);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .tier-card h3 {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--a-ink);
+  }
+
+  .tier-price {
+    font-family: var(--font-display-warm);
+    font-weight: 800;
+    font-size: 2rem;
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--a-ink);
+  }
+
+  .tier-price span {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--a-muted);
+  }
+
+  .tier-desc {
+    margin-top: 1rem;
+    font-family: var(--font-body);
+    color: var(--a-muted);
+    line-height: 1.55;
+    font-size: 0.92rem;
+  }
+
+  .tier-features {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    flex: 1;
+  }
+
+  .tier-features li {
+    font-family: var(--font-body);
+    color: var(--a-ink);
+    font-size: 0.88rem;
+    line-height: 1.4;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .tier-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--a-coral);
+  }
+
+  .tier-footnote {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--a-muted);
+    margin-top: 1.5rem;
+  }
+
+  .tier-cta {
+    margin-top: 1.5rem;
+    width: 100%;
+    text-align: center;
+  }
+</style>

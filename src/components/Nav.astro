@@ -1,0 +1,694 @@
+---
+// Homepage-section links use a path-prefixed hash (/#id) so they still
+// resolve correctly when clicked from a standalone page like /contact —
+// site.ts smooth-scrolls in place when already on the matching page, and
+// otherwise just lets the browser navigate there natively.
+const links = [
+  { id: 'home', label: 'Home', href: '/#home' },
+  { id: 'about', label: 'Journey', href: '/#about' },
+  { id: 'team', label: 'Team', href: '/#team' },
+  { id: 'work', label: 'Work', href: '/#work' },
+  { id: 'capabilities', label: 'What You Get', href: '/#capabilities' },
+  { id: 'services', label: 'Services', href: '/#services' },
+  { id: 'clients', label: 'Clients', href: '/#clients' },
+  { id: 'faq', label: 'FAQ', href: '/#faq' },
+  { id: 'contact', label: 'Contact', href: '/contact' },
+];
+
+const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
+---
+
+<div class="rig" data-rig>
+  <div class="rig-main-card">
+    <a href="/#home" class="rig-piece rig-logo" data-rail-tick data-flip="logo">
+      <span class="rig-logo-mark">SSPH</span>
+      <span class="rig-logo-sub">Startup Sites PH</span>
+    </a>
+
+    <button
+      type="button"
+      class="rig-piece rig-theme"
+      data-flip="theme"
+      data-theme-toggle
+      aria-label="Toggle dark mode"
+      aria-pressed="false"
+    >
+      <span class="theme-icon-stack">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 1020.354 15.354z" />
+        </svg>
+        <svg
+          class="theme-icon theme-icon-sun"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
+          <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6L4.2 4.2M19.8 19.8l-1.4-1.4M18.4 5.6l1.4-1.4M4.2 19.8l1.4-1.4" />
+        </svg>
+      </span>
+    </button>
+
+    <p class="rig-piece rig-desc" data-flip="desc">
+      A small PH-based team building fast, considered Webflow &amp; Astro sites for
+      founders who need to launch on schedule.
+    </p>
+
+    <div class="rig-piece rig-stats" data-flip="stats">
+      <div class="rig-stat">
+        <strong>[X]</strong>
+        <span>Sites Shipped</span>
+      </div>
+      <div class="rig-stat">
+        <strong>1–2wk</strong>
+        <span>Avg. Turnaround</span>
+      </div>
+    </div>
+
+    <nav class="rig-piece rig-nav" data-flip="nav" aria-label="Page sections">
+      {
+        links.map((l) => (
+          <a href={l.href} data-rail-tick data-section={l.id}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      class="rig-piece rig-email"
+      href="mailto:hello@startupsitesph.com"
+      data-flip="email"
+    >
+      hello@startupsitesph.com
+    </a>
+
+    <a class="rig-piece rig-cta" href="/contact" data-rail-tick data-flip="cta">
+      Book a Call
+    </a>
+  </div>
+
+  <div class="rig-piece rig-logos" data-flip="logos">
+    <span class="visually-hidden">Selected clients: {clientLogos.join(', ')}</span>
+    <div class="rig-logos-track" aria-hidden="true">
+      {clientLogos.map((name) => <span>{name}</span>)}
+      {clientLogos.map((name) => <span>{name}</span>)}
+    </div>
+  </div>
+
+  <button class="rig-toggle" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu">
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
+<div class="mobile-scrim" data-mobile-scrim></div>
+
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+  <button type="button" class="mobile-theme-toggle" data-theme-toggle aria-label="Toggle dark mode" aria-pressed="false">
+    <span class="theme-icon-stack">
+      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 1020.354 15.354z" />
+      </svg>
+      <svg
+        class="theme-icon theme-icon-sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
+        <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6L4.2 4.2M19.8 19.8l-1.4-1.4M18.4 5.6l1.4-1.4M4.2 19.8l1.4-1.4" />
+      </svg>
+    </span>
+    <span class="theme-label">Dark Mode</span>
+  </button>
+
+  <ol>
+    {
+      links.map((l) => (
+        <li>
+          <a href={l.href} data-mobile-link>
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <a class="mobile-cta" href="/contact" data-mobile-link>Book a Call</a>
+</div>
+
+<style>
+  .rig {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .rig-piece {
+    position: absolute;
+    pointer-events: auto;
+    font-family: var(--font-body);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    color: var(--a-ink);
+    box-shadow: 0 8px 24px -12px rgba(29, 29, 31, 0.18);
+  }
+
+  /* ---- Spread / hero layout (desktop, undocked) ---- */
+  .rig-logo {
+    top: 1rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.65rem 1.1rem;
+    border-radius: 14px;
+    text-decoration: none;
+  }
+
+  .rig-logo-mark {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: var(--a-ink);
+  }
+
+  .rig-logo-sub {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--a-muted);
+  }
+
+  .theme-icon-stack {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .theme-icon {
+    position: absolute;
+    inset: 0;
+    width: 18px;
+    height: 18px;
+    transition:
+      opacity 0.35s ease,
+      transform 0.4s var(--ease-bounce);
+  }
+
+  .theme-icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .theme-icon-sun {
+    opacity: 0;
+    transform: rotate(-80deg) scale(0.5);
+  }
+
+  :root[data-theme='dark'] .theme-icon-moon {
+    opacity: 0;
+    transform: rotate(80deg) scale(0.5);
+  }
+
+  :root[data-theme='dark'] .theme-icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .rig-theme {
+    top: 1rem;
+    left: 11rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .rig-desc {
+    top: 1rem;
+    right: 1.5rem;
+    max-width: 260px;
+    padding: 0.85rem 1.1rem;
+    border-radius: 14px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .rig-nav {
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.2rem;
+    padding: 0.35rem;
+    border-radius: 999px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    max-width: none;
+  }
+
+  .rig-nav a {
+    text-decoration: none;
+    color: var(--a-ink);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.25s var(--ease-blueprint), color 0.25s var(--ease-blueprint);
+  }
+
+  .rig-nav a.is-active {
+    background: var(--a-coral);
+    color: #fff;
+  }
+
+  .rig-stats {
+    bottom: 8rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .rig-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 1.1rem;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 24px -12px rgba(11, 21, 43, 0.35);
+  }
+
+  .rig-stat strong {
+    font-family: var(--font-display-warm);
+    font-size: 1.4rem;
+    color: var(--a-ink);
+  }
+
+  .rig-stat span {
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--a-muted);
+  }
+
+  .rig-logos {
+    display: none;
+  }
+
+  .rig-email {
+    bottom: 1.5rem;
+    left: 1.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.7rem;
+    color: var(--a-ink);
+  }
+
+  .rig-cta {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--a-coral);
+    color: #fff;
+    border-color: var(--a-coral);
+    font-weight: 500;
+  }
+
+  .rig-toggle {
+    display: none;
+    pointer-events: auto;
+  }
+
+  /* ---- Docked / sidebar layout ---- */
+  .rig[data-docked='true'] {
+    inset: auto;
+    top: 0.75rem;
+    left: 1.25rem;
+    width: min(280px, calc(100vw - 2.5rem));
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: visible;
+    pointer-events: auto;
+  }
+
+  /* Only clip/scroll once the Flip transition has fully settled — clipping
+     during the animation hides the pieces mid-flight (they're transformed
+     outside the still-small box), which reads as a sudden, un-animated pop. */
+  .rig[data-docked='true'][data-settled='true'] {
+    max-height: calc(100vh - 1.5rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .rig[data-docked='true'] .rig-piece {
+    position: static;
+    background: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
+    max-width: none;
+    transform: none;
+    width: 100%;
+  }
+
+  .rig[data-docked='true'] .rig-main-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.1rem;
+    border-radius: 18px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 48px -28px rgba(11, 21, 43, 0.45);
+  }
+
+  .rig[data-docked='true'] .rig-logo {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .rig[data-docked='true'] .rig-theme {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-self: flex-start;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 24px -12px rgba(29, 29, 31, 0.18);
+  }
+
+  .rig[data-docked='true'] .rig-stats {
+    flex-direction: row;
+    gap: 0.6rem;
+  }
+
+  .rig[data-docked='true'] .rig-stat {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .rig[data-docked='true'] .rig-nav {
+    flex-direction: column;
+    gap: 0.15rem;
+    max-width: none;
+    align-items: stretch;
+  }
+
+  .rig[data-docked='true'] .rig-nav a {
+    text-align: left;
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .rig[data-docked='true'] .rig-logos {
+    display: block;
+    overflow: hidden;
+    padding: 0.85rem 0;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 48px -28px rgba(11, 21, 43, 0.45);
+    /* Fade the ticker at both edges instead of hard-clipping it. */
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  }
+
+  /* Duplicated content (two copies of the same list) scrolled exactly one
+     copy's width via translateX(-50%) — the loop point is invisible since
+     the second copy is already sitting where the first one started. */
+  .rig-logos-track {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    width: max-content;
+    padding: 0 1.1rem;
+    animation: rig-logos-marquee 16s linear infinite;
+  }
+
+  .rig-logos:hover .rig-logos-track {
+    animation-play-state: paused;
+  }
+
+  .rig-logos-track span {
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--a-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @keyframes rig-logos-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .rig[data-docked='true'] .rig-email {
+    font-size: 0.68rem;
+    word-break: break-all;
+  }
+
+  .rig[data-docked='true'] .rig-cta {
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.75rem;
+    /* The generic .rig-piece reset above strips background/color from every
+       docked piece — restore this one since, unlike the others, it's meant
+       to stay a solid coral button rather than go glass-transparent. */
+    background: var(--a-coral);
+    color: #fff;
+  }
+
+  /* ---- Mobile: simple top bar, no flip ---- */
+  @media (max-width: 899px) {
+    .rig {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 56px;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem !important;
+      gap: 0;
+      background: var(--a-surface-dark) !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      width: 100% !important;
+      max-height: none !important;
+      overflow: visible !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+
+    .rig-piece {
+      position: static !important;
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: 0 !important;
+      transform: none !important;
+      width: auto !important;
+    }
+
+    .rig-logo {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .rig-logo-mark,
+    .rig-logo-sub {
+      color: #fff;
+    }
+
+    .rig-desc,
+    .rig-stats,
+    .rig-nav,
+    .rig-logos,
+    .rig-email,
+    .rig-cta,
+    .rig-theme {
+      display: none !important;
+    }
+
+    .rig-toggle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .rig-toggle span {
+      display: block;
+      height: 1.5px;
+      background: #fff;
+      transition: transform 0.25s var(--ease-blueprint);
+    }
+
+    .rig-toggle[aria-expanded='true'] span:first-child {
+      transform: translateY(3.25px) rotate(45deg);
+    }
+
+    .rig-toggle[aria-expanded='true'] span:last-child {
+      transform: translateY(-3.25px) rotate(-45deg);
+    }
+  }
+
+  .mobile-scrim {
+    position: fixed;
+    inset: 56px 0 0 0;
+    z-index: 94;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .mobile-scrim[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 56px 0 0 auto;
+    width: min(82vw, 320px);
+    z-index: 95;
+    background: var(--a-surface-dark);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease-bounce);
+    pointer-events: none;
+    box-shadow: -30px 0 60px -30px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-menu[data-open='true'] {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .mobile-menu ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobile-menu a {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .mobile-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    align-self: flex-start;
+    margin-bottom: 2rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .mobile-cta {
+    margin-top: auto;
+    text-align: center;
+    background: var(--a-coral);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border-radius: 999px;
+  }
+
+  @media (min-width: 900px) {
+    .mobile-menu,
+    .mobile-scrim {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/site.ts';
+</script>

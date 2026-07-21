@@ -1,0 +1,302 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const info: Array<{
+  accent: 'coral' | 'blue' | 'mint';
+  title: string;
+  body: string;
+  href?: string;
+  icon: 'mail' | 'clock' | 'check';
+}> = [
+  {
+    accent: 'coral',
+    title: 'Email us directly',
+    body: 'hello@startupsitesph.com',
+    href: 'mailto:hello@startupsitesph.com',
+    icon: 'mail',
+  },
+  {
+    accent: 'blue',
+    title: 'Response time',
+    body: 'Within 1 business day, usually sooner.',
+    icon: 'clock',
+  },
+  {
+    accent: 'mint',
+    title: 'What happens next',
+    body: 'A quick call to scope the project, then a fixed quote — no obligation.',
+    icon: 'check',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact — Startup Sites PH"
+  description="Tell us about your project. Startup Sites PH replies within one business day — no sales queue, just the team that builds it."
+>
+  <Nav />
+  <main>
+    <section class="contact-hero">
+      <div class="section-inner contact-hero-inner">
+        <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Contact</p>
+        <h1 class="warm-title contact-title" data-reveal>Tell us what<br />you're building.</h1>
+        <p class="contact-sub" data-reveal>
+          Send the details below and you'll hear back from an actual developer —
+          not a sales queue — within one business day.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact-body section">
+      <div class="section-inner contact-grid">
+        <form
+          class="contact-form warm-card"
+          data-reveal
+          method="POST"
+          action="https://formspree.io/f/your-form-id"
+        >
+          <div class="form-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required placeholder="Juan Dela Cruz" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required placeholder="juan@company.com" />
+            </label>
+          </div>
+
+          <label>
+            <span>Project type</span>
+            <select name="project_type">
+              <option>Starter Build</option>
+              <option>Ongoing Support</option>
+              <option>Custom Project</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Tell us about the project</span>
+            <textarea
+              name="message"
+              rows="5"
+              required
+              placeholder="Timeline, budget, what you're trying to launch..."
+            ></textarea>
+          </label>
+
+          <button type="submit" class="btn-warm btn-warm--primary">Send Message</button>
+        </form>
+
+        <div class="contact-info">
+          {
+            info.map((item) => (
+              <div class={`info-card warm-card info-card--${item.accent}`} data-reveal>
+                <span class="info-icon">
+                  {item.icon === 'mail' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="5" width="18" height="14" rx="3" />
+                      <path d="M3.5 6.5l8.5 6 8.5-6" />
+                    </svg>
+                  )}
+                  {item.icon === 'clock' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v5l3.5 2" />
+                    </svg>
+                  )}
+                  {item.icon === 'check' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 12.5l5 5L20 7" />
+                    </svg>
+                  )}
+                </span>
+                <h3>{item.title}</h3>
+                {item.href ? (
+                  <a href={item.href}>{item.body}</a>
+                ) : (
+                  <p>{item.body}</p>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    position: relative;
+    padding: 8rem 0 2rem;
+    background: var(--a-bg);
+  }
+
+  .contact-hero-inner {
+    max-width: 640px;
+  }
+
+  .contact-title {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin-top: 1rem;
+    max-width: 14ch;
+  }
+
+  .contact-sub {
+    margin-top: 1.25rem;
+    max-width: 46ch;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--a-muted);
+  }
+
+  .contact-body {
+    background: var(--a-bg);
+    padding-top: 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .contact-form {
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--a-ink);
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--a-ink);
+    background: var(--a-bg);
+    border: 1.5px solid color-mix(in srgb, var(--a-ink) 12%, transparent);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--a-coral);
+    box-shadow: 0 0 0 4px rgba(255, 107, 91, 0.14);
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .contact-form button {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    border: none;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .info-card {
+    padding: 1.75rem;
+  }
+
+  .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: #fff;
+  }
+
+  .info-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .info-card--coral .info-icon {
+    background: var(--a-coral);
+  }
+  .info-card--blue .info-icon {
+    background: var(--a-blue);
+  }
+  .info-card--mint .info-icon {
+    background: var(--a-mint);
+  }
+
+  .info-card h3 {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--a-ink);
+    margin-top: 1rem;
+  }
+
+  .info-card p,
+  .info-card a {
+    display: block;
+    margin-top: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--a-muted);
+    text-decoration: none;
+  }
+
+  .info-card a:hover {
+    color: var(--a-coral);
+  }
+
+  @media (max-width: 899px) {
+    .contact-hero {
+      padding-top: 6rem;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

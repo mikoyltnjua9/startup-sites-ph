@@ -1,0 +1,50 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="section-inner footer-inner">
+    <span>© {currentYear} Startup Sites PH</span>
+    <nav aria-label="Footer">
+      <a href="/#home">Home</a>
+      <a href="/#work">Work</a>
+      <a href="/#services">Services</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--a-surface-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-inner {
+    padding: 1.5rem var(--edge);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .footer-inner nav {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-inner a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s;
+  }
+
+  .footer-inner a:hover {
+    color: #fff;
+  }
+</style>

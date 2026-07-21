@@ -1,0 +1,184 @@
+---
+const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender', 'coral'] as const;
+
+const phases = [
+  {
+    year: '2022',
+    tag: 'Phase 01',
+    title: 'Laying the foundation',
+    body: 'Startup Sites PH started as three developers tired of watching early-stage founders overpay for slow, template-locked websites. We began building fast, custom sites for local startups on the side.',
+  },
+  {
+    year: '2022',
+    tag: 'Phase 02',
+    title: 'First real client',
+    body: '[Placeholder] — our first paying client trusted us with their launch site. It taught us that a good site isn’t just design, it’s a deadline someone else’s business depends on.',
+  },
+  {
+    year: '2023',
+    tag: 'Phase 03',
+    title: 'Going Webflow-first',
+    body: 'We standardized on Webflow and GSAP as our core stack — fast to build, easy for clients to edit after handoff, and capable of motion work that off-the-shelf themes can’t touch.',
+  },
+  {
+    year: '2024',
+    tag: 'Phase 04',
+    title: 'From referrals, not ads',
+    body: '[Placeholder] — most new work started coming from past clients recommending us to other founders. No cold outreach, just sites that held up after launch.',
+  },
+  {
+    year: '2025',
+    tag: 'Phase 05',
+    title: 'A repeatable blueprint',
+    body: 'We turned our process into a system: Discovery, Wireframe, Build, Launch. Every project now moves through the same four checkpoints, so quality doesn’t depend on which day you started.',
+  },
+  {
+    year: '2026',
+    tag: 'Phase 06',
+    title: 'Building for what’s next',
+    body: 'Now scaling capacity for more concurrent builds and folding AI-assisted workflows into research and QA — same standards, faster cycles.',
+  },
+].map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
+---
+
+<section class="about section" id="about">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Our Journey</p>
+    <h2 class="about-title warm-title" data-reveal>Seven phases,<br />one build system.</h2>
+
+    <ol class="timeline">
+      {
+        phases.map((p) => (
+          <li class="timeline-item" data-reveal>
+            <div class="timeline-marker">
+              <span class={`timeline-year timeline-year--${p.accent}`}>{p.year}</span>
+            </div>
+            <div class="timeline-content">
+              <p class={`timeline-tag timeline-tag--${p.accent}`}>{p.tag}</p>
+              <h3>{p.title}</h3>
+              <p class="timeline-body">{p.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--a-bg);
+  }
+
+  .about-title {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    margin-top: 1rem;
+    max-width: 14ch;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    padding: 0;
+    position: relative;
+    max-width: 760px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: rgba(29, 29, 31, 0.1);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.5rem;
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .timeline-year {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #fff;
+    border: 4px solid var(--a-bg);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .timeline-year--coral {
+    background: var(--a-coral);
+  }
+  .timeline-year--blue {
+    background: var(--a-blue);
+  }
+  .timeline-year--mint {
+    background: var(--a-mint);
+  }
+  .timeline-year--yellow {
+    background: var(--a-yellow);
+  }
+  .timeline-year--lavender {
+    background: var(--a-lavender);
+  }
+
+  .timeline-tag {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0.4rem 0 0.5rem;
+  }
+
+  .timeline-tag--coral {
+    color: var(--a-coral);
+  }
+  .timeline-tag--blue {
+    color: var(--a-blue);
+  }
+  .timeline-tag--mint {
+    color: var(--a-mint);
+  }
+  .timeline-tag--yellow {
+    color: #c99000;
+  }
+  .timeline-tag--lavender {
+    color: var(--a-lavender);
+  }
+
+  .timeline-content h3 {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: var(--a-ink);
+  }
+
+  .timeline-body {
+    margin-top: 0.6rem;
+    font-family: var(--font-body);
+    color: var(--a-muted);
+    line-height: 1.55;
+    max-width: 52ch;
+  }
+</style>

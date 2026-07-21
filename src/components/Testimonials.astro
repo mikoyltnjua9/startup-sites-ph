@@ -1,0 +1,169 @@
+---
+const accents = ['coral', 'blue', 'mint'] as const;
+
+const quotes = [
+  {
+    quote: '[Placeholder testimonial] — the team delivered ahead of schedule and communicated clearly the entire time. Exactly what we needed for launch.',
+    name: '[Client Name]',
+    role: '[Title]',
+    company: '[company.com]',
+  },
+  {
+    quote: '[Placeholder testimonial] — they didn’t just build what we asked for, they pointed out where our original brief would’ve hurt conversions.',
+    name: '[Client Name]',
+    role: '[Title]',
+    company: '[company.com]',
+  },
+  {
+    quote: '[Placeholder testimonial] — reliable, fast, and easy to reach whenever something needed a fix post-launch.',
+    name: '[Client Name]',
+    role: '[Title]',
+    company: '[company.com]',
+  },
+].map((q, i) => ({ ...q, accent: accents[i % accents.length] }));
+---
+
+<section class="testimonials section" id="clients">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Clients</p>
+    <h2 class="testimonials-title warm-title" data-reveal>Trusted by founders<br />who move fast.</h2>
+
+    <div class="quote-spotlight" data-reveal data-quote-spotlight data-quotes={JSON.stringify(quotes)}>
+      <svg class="quote-mark" viewBox="0 0 32 24" fill="currentColor" aria-hidden="true">
+        <path d="M0 24V14.4C0 9.87 1.07 6.4 3.2 4C5.33 1.6 8.13 0.27 11.6 0L13.2 3.6C11.07 4.13 9.4 5.07 8.2 6.4C7 7.73 6.4 9.33 6.4 11.2H12.8V24H0ZM19.2 24V14.4C19.2 9.87 20.27 6.4 22.4 4C24.53 1.6 27.33 0.27 30.8 0L32.4 3.6C30.27 4.13 28.6 5.07 27.4 6.4C26.2 7.73 25.6 9.33 25.6 11.2H32V24H19.2Z" />
+      </svg>
+
+      <blockquote class="quote-spot-text" data-quote-text>“{quotes[0].quote}”</blockquote>
+
+      <div class="quote-spot-attr">
+        <span class="quote-spot-dot" data-quote-dot style={`background: var(--a-${quotes[0].accent})`} />
+        <span>
+          <strong data-quote-name>{quotes[0].name}</strong>
+          <span class="quote-spot-role" data-quote-role>{quotes[0].role} · {quotes[0].company}</span>
+        </span>
+      </div>
+
+      <div class="quote-controls">
+        <button type="button" class="quote-arrow" data-quote-prev aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
+        <div class="quote-progress" aria-hidden="true">
+          <span data-quote-current>01</span>
+          <span class="quote-progress-sep">/</span>
+          <span>{String(quotes.length).padStart(2, '0')}</span>
+        </div>
+        <button type="button" class="quote-arrow" data-quote-next aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: var(--a-bg);
+  }
+
+  .testimonials-title {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    margin-top: 1rem;
+    max-width: 16ch;
+  }
+
+  .quote-spotlight {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    max-width: 720px;
+  }
+
+  .quote-mark {
+    width: 40px;
+    height: 30px;
+    color: var(--a-coral);
+    opacity: 0.4;
+  }
+
+  .quote-spot-text {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-display-warm);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 3vw, 2.15rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--a-ink);
+  }
+
+  .quote-spot-attr {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+    font-family: var(--font-body);
+  }
+
+  .quote-spot-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .quote-spot-attr strong {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--a-ink);
+  }
+
+  .quote-spot-role {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--a-muted);
+    margin-top: 0.1rem;
+  }
+
+  .quote-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+
+  .quote-progress {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--a-muted);
+  }
+
+  .quote-progress-sep {
+    margin: 0 0.15em;
+    opacity: 0.6;
+  }
+
+  .quote-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--a-card);
+    color: var(--a-ink);
+    box-shadow: 0 12px 30px -18px var(--a-shadow);
+    transition: transform 0.3s var(--ease-bounce);
+  }
+
+  .quote-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .quote-arrow:hover {
+    transform: translateY(-2px) scale(1.06);
+  }
+</style>

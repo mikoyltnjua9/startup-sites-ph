@@ -1,0 +1,61 @@
+<section class="cta">
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="section-inner cta-inner">
+    <p class="eyebrow-warm eyebrow-warm--on-dark" data-reveal><span class="eyebrow-dot"></span>Have Something in Mind?</p>
+    <h2 class="warm-title warm-title--on-dark" data-reveal>Let's build the site<br />your startup launches on.</h2>
+    <div class="cta-actions" data-reveal>
+      <a class="btn-warm btn-warm--primary" href="/contact">Book a Call</a>
+      <a class="cta-link" href="mailto:hello@startupsitesph.com">hello@startupsitesph.com</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    background: var(--a-surface-dark);
+    color: #fff;
+    overflow: clip;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    margin-left: -350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 107, 91, 0.22), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    padding: clamp(4rem, 10vw, 8rem) var(--edge);
+    text-align: left;
+  }
+
+  .cta-inner h2 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    margin-top: 1rem;
+    max-width: 16ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .cta-link {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--a-coral);
+    border-bottom: 1px solid rgba(255, 107, 91, 0.4);
+    padding-bottom: 0.2rem;
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender'] as const;
+
+const capabilities = [
+  {
+    tag: 'Blueprint',
+    title: 'Webflow & Astro Development',
+    body: 'Fast, scalable sites with clean structure — CMS setups when you need to self-edit, static builds when you need raw speed.',
+  },
+  {
+    tag: 'Wiring',
+    title: 'Custom Integrations',
+    body: 'CRM, payments, booking, and third-party APIs wired in cleanly, so your site connects to the tools you already run on.',
+  },
+  {
+    tag: 'Foundation',
+    title: 'SEO-Ready Setup',
+    body: 'Structured markup, sitemap, and on-page SEO from day one — not bolted on after launch.',
+  },
+  {
+    tag: 'Finish',
+    title: 'Creative & Interactive Motion',
+    body: 'Scroll-driven reveals and micro-interactions powered by GSAP, tuned so motion supports the message instead of distracting from it.',
+  },
+  {
+    tag: 'Inspection',
+    title: 'Performance & Technical Optimization',
+    body: 'Lighthouse-checked speed, clean asset loading, and technical SEO so the site holds up under real traffic.',
+  },
+].map((c, i) => ({ ...c, accent: accents[i % accents.length] }));
+---
+
+<section class="capabilities section" id="capabilities">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>What You Get</p>
+    <h2 class="capabilities-title warm-title" data-reveal>
+      Strategy and build,<br />combined into one scope.
+    </h2>
+
+    <div class="cap-timeline" data-cap-timeline>
+      <svg class="cap-line" data-cap-line aria-hidden="true">
+        <defs>
+          <linearGradient id="cap-line-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" style="stop-color:var(--a-coral)" />
+            <stop offset="25%" style="stop-color:var(--a-blue)" />
+            <stop offset="50%" style="stop-color:var(--a-mint)" />
+            <stop offset="75%" style="stop-color:var(--a-yellow)" />
+            <stop offset="100%" style="stop-color:var(--a-lavender)" />
+          </linearGradient>
+        </defs>
+        <path class="cap-line-track" data-cap-line-track></path>
+        <path class="cap-line-progress" data-cap-line-progress></path>
+      </svg>
+
+      <ul class="cap-grid">
+        {
+          capabilities.map((c, i) => (
+            <li class={`cap-card cap-card--${c.accent}`} data-reveal data-cap-card>
+              <span class="cap-node" data-cap-node aria-hidden="true" />
+              <span class="cap-index">{String(i + 1).padStart(2, '0')}</span>
+              <span class="cap-tag">{c.tag}</span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities {
+    background: var(--a-bg);
+  }
+
+  .capabilities-title {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    margin-top: 1rem;
+    max-width: 18ch;
+  }
+
+  /* ---- Connector line: an SVG path threaded through each card's node,
+     "drawn" as the section scrolls (see initCapabilitiesLine in site.ts).
+     A dim static track sits under a gradient-colored progress copy whose
+     stroke-dashoffset is scrubbed to scroll position. ---- */
+  .cap-timeline {
+    position: relative;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .cap-line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .cap-line-track {
+    fill: none;
+    stroke: color-mix(in srgb, var(--a-ink) 10%, transparent);
+    stroke-width: 2;
+  }
+
+  .cap-line-progress {
+    fill: none;
+    stroke: url(#cap-line-gradient);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+
+  .cap-grid {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 3.25rem);
+  }
+
+  .cap-card {
+    position: relative;
+    width: min(480px, 100%);
+    background: var(--a-card);
+    border-radius: 24px;
+    padding: 1.75rem;
+    box-shadow: 0 20px 45px -30px var(--a-shadow);
+    transition: transform 0.4s var(--ease-bounce);
+  }
+
+  .cap-card:nth-child(odd) {
+    align-self: flex-start;
+  }
+
+  .cap-card:nth-child(even) {
+    align-self: flex-end;
+  }
+
+  .cap-card:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Small dot marker threaded on the connector line, straddling whichever
+     card edge faces the gutter (opposite the card's own alignment) so it
+     never sits underneath the opaque card body. */
+  .cap-node {
+    position: absolute;
+    top: 2.75rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--a-card);
+  }
+
+  .cap-card:nth-child(odd) .cap-node {
+    right: -8px;
+  }
+
+  .cap-card:nth-child(even) .cap-node {
+    left: -8px;
+  }
+
+  .cap-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #fff;
+  }
+
+  .cap-card--coral .cap-node,
+  .cap-card--coral .cap-index {
+    background: var(--a-coral);
+  }
+  .cap-card--blue .cap-node,
+  .cap-card--blue .cap-index {
+    background: var(--a-blue);
+  }
+  .cap-card--mint .cap-node,
+  .cap-card--mint .cap-index {
+    background: var(--a-mint);
+  }
+  .cap-card--yellow .cap-node,
+  .cap-card--yellow .cap-index {
+    background: var(--a-yellow);
+  }
+  .cap-card--lavender .cap-node,
+  .cap-card--lavender .cap-index {
+    background: var(--a-lavender);
+  }
+
+  /* Below the desktop breakpoint the line collapses to a straight drop
+     (all cards share one edge, so the computed path has no zigzag left). */
+  @media (max-width: 899px) {
+    .cap-card:nth-child(odd),
+    .cap-card:nth-child(even) {
+      align-self: flex-start;
+      width: 100%;
+    }
+
+    .cap-card:nth-child(odd) .cap-node,
+    .cap-card:nth-child(even) .cap-node {
+      left: -8px;
+      right: auto;
+    }
+  }
+
+  .cap-tag {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--a-muted);
+    margin-top: 1rem;
+  }
+
+  .cap-card h3 {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--a-ink);
+    margin-top: 0.4rem;
+  }
+
+  .cap-card p {
+    margin-top: 0.6rem;
+    font-family: var(--font-body);
+    color: var(--a-muted);
+    line-height: 1.55;
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+const team = [
+  { name: 'Mikoy Litonjua', role: 'CEO', initials: 'ML', accent: 'coral' },
+  { name: 'Patrick Cruz', role: 'Project Manager', initials: 'PC', accent: 'blue' },
+  { name: 'Jason Salazar', role: 'Technical Head', initials: 'JS', accent: 'mint' },
+  { name: 'John Benedict Rafael', role: 'Senior Web Developer', initials: 'JR', accent: 'yellow' },
+  { name: 'John Merick Lapinozo', role: 'Senior SEO Specialist', initials: 'JL', accent: 'lavender' },
+];
+---
+
+<section class="team" id="team">
+  <div class="section-inner">
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Our Team</p>
+    <h2 class="team-title" data-reveal>Small team, all hands on deck.</h2>
+    <p class="team-sub" data-reveal>
+      Five people, every project. No account managers relaying messages —
+      you talk directly to whoever's building your site.
+    </p>
+
+    <ul class="team-grid">
+      {
+        team.map((person) => (
+          <li class={`team-card team-card--${person.accent}`} data-reveal>
+            <span class="team-avatar">{person.initials}</span>
+            <span class="team-name">{person.name}</span>
+            <span class="team-role">{person.role}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .team {
+    position: relative;
+    background: var(--a-bg);
+    color: var(--a-ink);
+    padding: clamp(4rem, 10vw, 7rem) 0;
+  }
+
+  .team-title {
+    font-family: var(--font-display-warm);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    letter-spacing: -0.01em;
+    margin-top: 1rem;
+    max-width: 16ch;
+    color: var(--a-ink);
+  }
+
+  .team-sub {
+    font-family: var(--font-body);
+    color: var(--a-muted);
+    max-width: 52ch;
+    margin-top: 1rem;
+    line-height: 1.55;
+  }
+
+  .team-grid {
+    list-style: none;
+    margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .team-card {
+    background: var(--a-card);
+    border-radius: 28px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem;
+    box-shadow: 0 20px 45px -28px var(--a-shadow);
+    transition:
+      transform 0.4s var(--ease-bounce),
+      box-shadow 0.4s var(--ease-bounce);
+  }
+
+  .team-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .team-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    transition: transform 0.45s var(--ease-bounce);
+  }
+
+  .team-card:hover .team-avatar {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .team-card--coral {
+    box-shadow: 0 24px 45px -26px rgba(255, 107, 91, 0.45);
+  }
+  .team-card--coral .team-avatar {
+    background: var(--a-coral);
+  }
+
+  .team-card--blue {
+    box-shadow: 0 24px 45px -26px rgba(77, 163, 255, 0.45);
+  }
+  .team-card--blue .team-avatar {
+    background: var(--a-blue);
+  }
+
+  .team-card--mint {
+    box-shadow: 0 24px 45px -26px rgba(52, 199, 154, 0.45);
+  }
+  .team-card--mint .team-avatar {
+    background: var(--a-mint);
+  }
+
+  .team-card--yellow {
+    box-shadow: 0 24px 45px -26px rgba(255, 201, 77, 0.45);
+  }
+  .team-card--yellow .team-avatar {
+    background: var(--a-yellow);
+  }
+
+  .team-card--lavender {
+    box-shadow: 0 24px 45px -26px rgba(155, 140, 255, 0.45);
+  }
+  .team-card--lavender .team-avatar {
+    background: var(--a-lavender);
+  }
+
+  .team-name {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--a-ink);
+  }
+
+  .team-role {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--a-muted);
+  }
+</style>
