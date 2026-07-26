@@ -52,6 +52,14 @@ const capabilities = [
         <path class="cap-line-progress" data-cap-line-progress></path>
       </svg>
 
+      <img
+        class="cap-rocket"
+        data-cap-rocket
+        src="/icons/rocket-small.png"
+        alt=""
+        aria-hidden="true"
+      />
+
       <ul class="cap-grid">
         {
           capabilities.map((c, i) => (
@@ -109,6 +117,23 @@ const capabilities = [
     stroke: url(#cap-line-gradient);
     stroke-width: 2.5;
     stroke-linecap: round;
+  }
+
+  /* Rides the tip of .cap-line-progress as it draws (see positionRocket in
+     initCapabilitiesLine, site.ts) — translated + rotated to face the
+     path's direction of travel every frame. z-index above the cards so it
+     never ducks behind one mid-flight where the path curves under them. */
+  .cap-rocket {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    z-index: 5;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform;
+    filter: drop-shadow(0 6px 12px rgba(255, 90, 70, 0.35));
   }
 
   .cap-grid {

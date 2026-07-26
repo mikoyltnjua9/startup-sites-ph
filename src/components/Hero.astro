@@ -36,15 +36,16 @@
 
   <div class="section-inner hero-inner">
     <div class="hero-copy">
-      <p class="eyebrow-warm" data-hero-in><span class="eyebrow-dot"></span>Startup Sites PH — Web Dev Studio</p>
+      <p class="eyebrow-warm" data-hero-in><span class="eyebrow-dot"></span>Startup Sites PH — Web, SEO &amp; Social</p>
       <h1 class="hero-title-warm" data-hero-in>
-        We draft, build,<br />
-        and launch the sites<br />
-        startups grow on.
+        We build, launch,<br />
+        and grow the sites<br />
+        your business runs on.
       </h1>
       <p class="hero-sub-warm" data-hero-in>
-        A Philippines-based Webflow &amp; web development team for founders who need
-        a site that looks considered, loads fast, and ships on schedule.
+        A Philippines-based team building fast, considered websites — backed by
+        the SEO and social media marketing that keep customers coming back.
+        Quality work, without the big-agency price tag.
       </p>
       <div class="hero-actions-warm" data-hero-in>
         <a class="btn-warm btn-warm--primary" href="/contact">Start a Project</a>
@@ -58,19 +59,38 @@
           <div class="mock-nav" data-mock-block>
             <i class="dot dot--coral"></i><i class="dot dot--blue"></i><i class="dot dot--mint"></i>
           </div>
-          <div class="mock-hero" data-mock-block>
-            <span>HERO</span>
+          <div class="hero-screen">
+            <img
+              class="hero-shot"
+              data-hero-shot
+              src="/work/ddc-consulting.webp"
+              alt="Screenshot of the DDC Consulting website, built by Startup Sites PH"
+              loading="eager"
+            />
+            <div class="hero-shot-hint" aria-hidden="true">Hover to preview</div>
           </div>
-          <div class="mock-row" data-mock-block>
-            <div class="mock-card"></div>
-            <div class="mock-card"></div>
-            <div class="mock-card"></div>
+        </div>
+
+        <div class="hero-badge hero-badge--seo">
+          <div class="hero-badge-inner" data-blob>
+            <span class="hero-badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 17l6-6 4 4 8-8" />
+                <path d="M15 7h6v6" />
+              </svg>
+            </span>
+            <span class="hero-badge-label">SEO Growth</span>
           </div>
-          <div class="mock-band" data-mock-block>
-            <span>FEATURES</span>
-          </div>
-          <div class="mock-footer" data-mock-block>
-            <span>FOOTER</span>
+        </div>
+
+        <div class="hero-badge hero-badge--social">
+          <div class="hero-badge-inner" data-blob>
+            <span class="hero-badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 20l1.6-4.8A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-4.7-1.7z" />
+              </svg>
+            </span>
+            <span class="hero-badge-label">Social Reach</span>
           </div>
         </div>
       </div>
@@ -288,13 +308,82 @@
   }
 
   .hero-mockup-wrap {
+    position: relative;
     width: min(100%, 420px);
+  }
+
+  /* Orbiting proof-point chips — web dev is the flagship (the mockup
+     itself), these two nod to the complementary SEO/social services
+     without competing with it. Same two-layer pattern as .blob-slot/.blob:
+     the outer .hero-badge owns position + the idle CSS float, the inner
+     .hero-badge-inner owns the GSAP cursor-repel transform (initHeroBlobs
+     in site.ts already targets any [data-blob], not just the icon blobs). */
+  .hero-badge {
+    position: absolute;
+    z-index: 2;
+    animation: blobFloat 7s ease-in-out infinite;
+  }
+
+  .hero-badge--seo {
+    top: -4%;
+    right: -6%;
+  }
+
+  .hero-badge--social {
+    bottom: 10%;
+    left: -9%;
+    animation-duration: 6.4s;
+    animation-delay: -2.2s;
+  }
+
+  .hero-badge-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.9rem 0.55rem 0.55rem;
+    border-radius: 999px;
+    background: var(--a-card);
+    border: 1px solid rgba(29, 29, 31, 0.06);
+    box-shadow: 0 16px 32px -18px var(--a-shadow);
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  .hero-badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .hero-badge-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero-badge--seo .hero-badge-icon {
+    background: var(--a-mint);
+  }
+
+  .hero-badge--social .hero-badge-icon {
+    background: var(--a-lavender);
+  }
+
+  .hero-badge-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--a-ink);
   }
 
   .hero-mockup {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
@@ -337,58 +426,44 @@
     background: var(--a-mint);
   }
 
-  .mock-hero {
-    flex: 2.2;
-    border-radius: 12px;
-    border: 1px solid rgba(29, 29, 31, 0.06);
-    background: linear-gradient(135deg, rgba(255, 107, 91, 0.14), rgba(77, 163, 255, 0.08));
-    display: flex;
-    align-items: flex-end;
-    padding: 0.65rem;
-  }
-
-  .mock-row {
-    flex: 1.1;
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .mock-card {
+  /* Real screenshot, clipped to a "browser viewport" and panned into view
+     on hover — same mechanic as the Work section's device preview
+     (initHeroShotPreview in site.ts mirrors initDevicePreview). */
+  .hero-screen {
+    position: relative;
     flex: 1;
-    border-radius: 10px;
-    border: 1px solid rgba(29, 29, 31, 0.06);
-    background: rgba(29, 29, 31, 0.025);
-  }
-
-  .mock-band {
-    flex: 1.5;
     border-radius: 12px;
-    border: 1px solid rgba(29, 29, 31, 0.06);
-    background: rgba(52, 199, 154, 0.09);
-    display: flex;
-    align-items: center;
-    padding: 0 0.65rem;
+    overflow: hidden;
+    background: #1c1c1e;
   }
 
-  .mock-footer {
-    flex: 0 0 auto;
-    height: 28px;
-    border-radius: 8px;
-    background: rgba(29, 29, 31, 0.04);
-    display: flex;
-    align-items: center;
-    padding: 0 0.65rem;
+  .hero-shot {
+    position: absolute;
+    inset: 0 0 auto 0;
+    width: 100%;
+    height: auto;
+    display: block;
+    will-change: transform;
   }
 
-  .mock-hero span,
-  .mock-band span,
-  .mock-footer span {
+  .hero-shot-hint {
+    position: absolute;
+    inset: auto 0 0.6rem 0;
+    text-align: center;
     font-family: var(--font-body);
+    font-weight: 500;
     font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--a-muted);
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+
+  .hero-mockup:hover .hero-shot-hint {
+    opacity: 0;
   }
 
   @media (max-width: 900px) {
@@ -462,6 +537,37 @@
     .blob-slot--spark-c,
     .blob-slot--spark-d {
       display: none;
+    }
+
+    /* Pull the badges in closer so they don't hang past the narrower
+       mockup's edge on small screens. */
+    .hero-badge--seo {
+      top: -2%;
+      right: -2%;
+    }
+
+    .hero-badge--social {
+      bottom: 6%;
+      left: -4%;
+    }
+
+    .hero-badge-inner {
+      gap: 0.4rem;
+      padding: 0.4rem 0.7rem 0.4rem 0.4rem;
+    }
+
+    .hero-badge-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .hero-badge-icon svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .hero-badge-label {
+      font-size: 0.68rem;
     }
   }
 

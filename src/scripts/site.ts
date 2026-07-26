@@ -470,15 +470,59 @@ function initDevicePreview() {
   });
 }
 
+// Same hover-scroll-pan as initDevicePreview above, scoped to the Hero's
+// single real screenshot rather than the Work grid's repeated cards.
+function initHeroShotPreview() {
+  if (prefersReducedMotion) return;
+
+  const mockup = document.querySelector<HTMLElement>('[data-hero-mockup]');
+  const screen = mockup?.querySelector<HTMLElement>('.hero-screen');
+  const shot = mockup?.querySelector<HTMLElement>('[data-hero-shot]');
+  if (!mockup || !screen || !shot) return;
+
+  let tween: gsap.core.Tween | null = null;
+
+  mockup.addEventListener('mouseenter', () => {
+    const max = shot.offsetHeight - screen.clientHeight;
+    if (max <= 0) return;
+    tween?.kill();
+    tween = gsap.to(shot, { y: -max, duration: 8, ease: 'none' });
+  });
+
+  mockup.addEventListener('mouseleave', () => {
+    tween?.kill();
+    tween = gsap.to(shot, { y: 0, duration: 0.6, ease: 'power2.out' });
+  });
+}
+
 function initCapabilitiesLine() {
   const wrap = document.querySelector<HTMLElement>('[data-cap-timeline]');
   const svg = document.querySelector<SVGSVGElement>('[data-cap-line]');
   const track = document.querySelector<SVGPathElement>('[data-cap-line-track]');
   const progress = document.querySelector<SVGPathElement>('[data-cap-line-progress]');
+  const rocket = document.querySelector<HTMLElement>('[data-cap-rocket]');
   const cards = gsap.utils.toArray<HTMLElement>('[data-cap-card]');
   if (!wrap || !svg || !track || !progress || cards.length === 0) return;
 
   let length = 0;
+
+  // Faces the rocket along the path's direction of travel at `len`, by
+  // sampling a point just before and after it and turning that into an
+  // angle. Path tangents use standard atan2 convention (0deg = pointing
+  // +x/right); the rocket artwork's resting orientation points up (-90deg
+  // in that convention), so travel-angle + 90 lines the nose up with it.
+  function positionRocket(len: number) {
+    if (!rocket) return;
+    const clampedLen = Math.max(0, Math.min(len, length));
+    const point = progress!.getPointAtLength(clampedLen);
+    const back = progress!.getPointAtLength(Math.max(0, clampedLen - 1));
+    const fwd = progress!.getPointAtLength(Math.min(length, clampedLen + 1));
+    const angle = (Math.atan2(fwd.y - back.y, fwd.x - back.x) * 180) / Math.PI;
+
+    rocket!.style.transform =
+      `translate(${point.x - rocket!.offsetWidth / 2}px, ${point.y - rocket!.offsetHeight / 2}px) ` +
+      `rotate(${angle + 90}deg)`;
+  }
 
   function buildPath() {
     const wrapRect = wrap!.getBoundingClientRect();
@@ -513,6 +557,9 @@ function initCapabilitiesLine() {
     length = progress!.getTotalLength();
     progress!.style.strokeDasharray = String(length);
     progress!.style.strokeDashoffset = prefersReducedMotion ? '0' : String(length);
+    // Reduced motion shows the line fully drawn (dashoffset 0), so the
+    // rocket parks at the end to match; otherwise it starts at the tip.
+    positionRocket(prefersReducedMotion ? length : 0);
   }
 
   buildPath();
@@ -526,7 +573,9 @@ function initCapabilitiesLine() {
         scrub: 0.4,
         onUpdate: (self) => {
           if (!length) return;
-          progress!.style.strokeDashoffset = String(length * (1 - self.progress));
+          const revealLength = length * self.progress;
+          progress!.style.strokeDashoffset = String(length - revealLength);
+          positionRocket(revealLength);
         },
       });
 
@@ -815,6 +864,7 @@ function init() {
   initHeroNetwork();
   initHeroBlobs();
   initHeroTilt();
+  initHeroShotPreview();
 
   // Safety net for late layout shifts (font/image load reflow).
   ScrollTrigger.refresh();
