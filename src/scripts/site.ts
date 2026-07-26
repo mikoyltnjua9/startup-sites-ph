@@ -868,6 +868,15 @@ function init() {
 
   // Safety net for late layout shifts (font/image load reflow).
   ScrollTrigger.refresh();
+
+  // The line above runs before async images (e.g. the Hero's real
+  // screenshot) have necessarily finished loading and settled their
+  // layout — sections further down the page (Capabilities' height in
+  // particular, after its zigzag redesign) can still shift afterward,
+  // leaving every ScrollTrigger's cached position stale. 'load' fires
+  // once everything (images, fonts, stylesheets) has actually finished,
+  // so refresh once more there to catch it.
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
 if (document.readyState === 'loading') {
