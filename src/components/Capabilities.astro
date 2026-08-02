@@ -3,29 +3,29 @@ const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender'] as const;
 
 const capabilities = [
   {
-    tag: 'Blueprint',
-    title: 'Webflow & Astro Development',
-    body: 'Fast, scalable sites with clean structure — CMS setups when you need to self-edit, static builds when you need raw speed.',
+    tag: 'Foundation',
+    title: 'Website Design & Development',
+    body: 'Fast, modern websites built around your business, with a clean structure and simple content management.',
+  },
+  {
+    tag: 'Visibility',
+    title: 'Search Engine Optimization',
+    body: 'On page SEO, technical setup, and content structure built in from day one, not bolted on after launch.',
+  },
+  {
+    tag: 'Growth',
+    title: 'Social Media Marketing',
+    body: 'Content planning, posting, and audience growth across the platforms your customers already use.',
   },
   {
     tag: 'Wiring',
     title: 'Custom Integrations',
-    body: 'CRM, payments, booking, and third-party APIs wired in cleanly, so your site connects to the tools you already run on.',
+    body: 'CRM, payments, booking, and other tools wired in cleanly, so your site connects to what you already run on.',
   },
   {
-    tag: 'Foundation',
-    title: 'SEO-Ready Setup',
-    body: 'Structured markup, sitemap, and on-page SEO from day one — not bolted on after launch.',
-  },
-  {
-    tag: 'Finish',
-    title: 'Creative & Interactive Motion',
-    body: 'Scroll-driven reveals and micro-interactions powered by GSAP, tuned so motion supports the message instead of distracting from it.',
-  },
-  {
-    tag: 'Inspection',
-    title: 'Performance & Technical Optimization',
-    body: 'Lighthouse-checked speed, clean asset loading, and technical SEO so the site holds up under real traffic.',
+    tag: 'Support',
+    title: 'Performance & Ongoing Support',
+    body: 'Fast load times, regular maintenance, and a team you can still reach well after launch.',
   },
 ].map((c, i) => ({ ...c, accent: accents[i % accents.length] }));
 ---
