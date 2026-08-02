@@ -1,4 +1,6 @@
 ---
+import CloudLayer from './CloudLayer.astro';
+
 const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender'] as const;
 
 const capabilities = [
@@ -31,6 +33,7 @@ const capabilities = [
 ---
 
 <section class="capabilities section" id="capabilities">
+  <CloudLayer />
   <div class="section-inner">
     <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>What You Get</p>
     <h2 class="capabilities-title warm-title" data-reveal>
@@ -79,6 +82,7 @@ const capabilities = [
 
 <style>
   .capabilities {
+    position: relative;
     background: var(--a-bg);
   }
 

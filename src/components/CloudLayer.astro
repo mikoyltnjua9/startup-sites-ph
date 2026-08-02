@@ -1,0 +1,60 @@
+---
+// Shared decorative background for every non-Hero section: a few cloud
+// images that gently bob in place. No horizontal drift, by request.
+---
+
+<div class="cloud-layer" aria-hidden="true">
+  <img class="cloud cloud--a" src="/icons/cloud-floating.webp" alt="" />
+  <img class="cloud cloud--b" src="/icons/cloud-floating.webp" alt="" />
+  <img class="cloud cloud--c" src="/icons/cloud-floating.webp" alt="" />
+</div>
+
+<style>
+  .cloud-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cloud {
+    position: absolute;
+    height: auto;
+    opacity: 0.9;
+    filter: drop-shadow(0 14px 22px rgba(77, 163, 255, 0.28));
+    animation: cloud-float 8.5s ease-in-out infinite;
+  }
+
+  .cloud--a {
+    width: 190px;
+    top: 6%;
+    left: 4%;
+  }
+
+  .cloud--b {
+    width: 130px;
+    top: 46%;
+    right: 6%;
+    animation-duration: 9.5s;
+    animation-delay: -3s;
+  }
+
+  .cloud--c {
+    width: 150px;
+    top: 78%;
+    left: 12%;
+    animation-duration: 7.2s;
+    animation-delay: -5.5s;
+  }
+
+  @keyframes cloud-float {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-16px) scale(1.02);
+    }
+  }
+</style>

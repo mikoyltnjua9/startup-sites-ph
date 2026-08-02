@@ -1,4 +1,6 @@
 ---
+import CloudLayer from './CloudLayer.astro';
+
 const faqs = [
   {
     q: 'How long does a typical build take?',
@@ -28,6 +30,7 @@ const faqs = [
 ---
 
 <section class="faq section" id="faq">
+  <CloudLayer />
   <div class="section-inner">
     <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>FAQ</p>
     <h2 class="faq-title warm-title" data-reveal>Questions, answered<br />before you ask.</h2>
@@ -50,6 +53,7 @@ const faqs = [
 
 <style>
   .faq {
+    position: relative;
     background: var(--a-bg);
   }
 

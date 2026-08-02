@@ -1,29 +1,32 @@
 ---
+import CloudLayer from './CloudLayer.astro';
+
 const accents = ['coral', 'blue', 'mint'] as const;
 
 const quotes = [
   {
-    quote: '[Placeholder testimonial]: the team delivered ahead of schedule and communicated clearly the entire time. Exactly what we needed for launch.',
-    name: '[Client Name]',
-    role: '[Title]',
-    company: '[company.com]',
+    quote: 'They didn’t just build us a website, they built something that actually brings in leads. Our search visibility improved within the first couple of months, and the site keeps working for us long after launch.',
+    name: 'Joseph',
+    role: 'Owner',
+    company: 'webtosupport.com',
   },
   {
-    quote: '[Placeholder testimonial]: they didn’t just build what we asked for, they pointed out where our original brief would have hurt conversions.',
-    name: '[Client Name]',
-    role: '[Title]',
-    company: '[company.com]',
+    quote: 'As an accounting firm, trust matters more than anything. The team understood that and built a site that makes us look as credible as we actually are, without making the process complicated on our end.',
+    name: 'Luj',
+    role: 'Managing Partner',
+    company: 'ddcconsultinginc.com',
   },
   {
-    quote: '[Placeholder testimonial]: reliable, fast, and easy to reach whenever something needed a fix after launch.',
-    name: '[Client Name]',
-    role: '[Title]',
-    company: '[company.com]',
+    quote: 'We needed a site that could actually show off our project history, not just describe it. They delivered exactly that, on time, and made changes fast whenever we asked.',
+    name: 'Gustavo',
+    role: 'Owner',
+    company: 'vetmaxconstruction.com',
   },
 ].map((q, i) => ({ ...q, accent: accents[i % accents.length] }));
 ---
 
 <section class="testimonials section" id="clients">
+  <CloudLayer />
   <div class="section-inner">
     <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Clients</p>
     <h2 class="testimonials-title warm-title" data-reveal>Trusted by businesses<br />who move fast.</h2>
@@ -66,6 +69,7 @@ const quotes = [
 
 <style>
   .testimonials {
+    position: relative;
     background: var(--a-bg);
   }
 

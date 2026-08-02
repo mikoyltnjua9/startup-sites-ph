@@ -15,13 +15,21 @@ const links = [
   { id: 'contact', label: 'Contact', href: '/contact' },
 ];
 
-const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
+const clientLogos = [
+  { name: 'Sweeney Properties', file: 'sweeney' },
+  { name: 'Vetmax Construction', file: 'vetmax' },
+  { name: 'DDC Consulting Inc.', file: 'ddc' },
+  { name: 'Fujifilm-X', file: 'fujifilm' },
+  { name: 'Web To Support', file: 'webtosupport' },
+  { name: 'Rally Sports PH', file: 'rallysports' },
+  { name: 'LA Attorney', file: 'la-attorney' },
+];
 ---
 
 <div class="rig" data-rig>
   <div class="rig-main-card">
     <a href="/#home" class="rig-piece rig-logo" data-rail-tick data-flip="logo">
-      <span class="rig-logo-mark">SSPH</span>
+      <img class="rig-logo-icon" src="/icons/favicon.png" alt="" width="32" height="32" />
       <span class="rig-logo-sub">Startup Sites PH</span>
     </a>
 
@@ -92,10 +100,10 @@ const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
   </div>
 
   <div class="rig-piece rig-logos" data-flip="logos">
-    <span class="visually-hidden">Selected clients: {clientLogos.join(', ')}</span>
+    <span class="visually-hidden">Selected clients: {clientLogos.map((c) => c.name).join(', ')}</span>
     <div class="rig-logos-track" aria-hidden="true">
-      {clientLogos.map((name) => <span>{name}</span>)}
-      {clientLogos.map((name) => <span>{name}</span>)}
+      {clientLogos.map((c) => <img src={`/client-logos/${c.file}.webp`} alt="" loading="lazy" />)}
+      {clientLogos.map((c) => <img src={`/client-logos/${c.file}.webp`} alt="" loading="lazy" />)}
     </div>
   </div>
 
@@ -168,26 +176,26 @@ const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
     top: 1rem;
     left: 1.5rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding: 0.65rem 1.1rem;
-    border-radius: 14px;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    border-radius: 999px;
     text-decoration: none;
   }
 
-  .rig-logo-mark {
-    font-family: var(--font-display-warm);
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    color: var(--a-ink);
+  .rig-logo-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
   }
 
   .rig-logo-sub {
-    font-size: 0.58rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--a-muted);
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--a-ink);
   }
 
   .theme-icon-stack {
@@ -403,9 +411,7 @@ const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
   }
 
   .rig[data-docked='true'] .rig-logo {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.5rem;
+    padding: 0;
   }
 
   .rig[data-docked='true'] .rig-theme {
@@ -475,13 +481,13 @@ const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
     animation-play-state: paused;
   }
 
-  .rig-logos-track span {
-    font-size: 0.62rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--a-muted);
-    white-space: nowrap;
+  .rig-logos-track img {
+    height: 28px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
     flex-shrink: 0;
+    border-radius: 6px;
   }
 
   @keyframes rig-logos-marquee {
@@ -547,12 +553,10 @@ const clientLogos = ['[Client A]', '[Client B]', '[Client C]', '[Client D]'];
     }
 
     .rig-logo {
-      flex-direction: row;
-      align-items: baseline;
+      align-items: center;
       gap: 0.4rem;
     }
 
-    .rig-logo-mark,
     .rig-logo-sub {
       color: #fff;
     }

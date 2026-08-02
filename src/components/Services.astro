@@ -1,51 +1,106 @@
 ---
-const tiers = [
+import CloudLayer from './CloudLayer.astro';
+
+const webDevTiers = [
   {
-    name: 'Ongoing Support',
-    price: '[₱PRICE]',
-    unit: '/ month, [X] hrs',
-    desc: 'A dedicated developer on retainer. Whatever the site needs, handled, with a minimum 3-month commitment.',
+    name: 'Basic Design',
+    price: '₱7,999',
+    unit: '',
+    desc: 'A clean, custom site for businesses that just need a solid start.',
     features: [
-      'New pages, sections, and features',
-      'Campaign-driven updates',
-      'Maintenance, bug fixes, content updates',
-      'Technical SEO & performance passes',
-      'Unused hours roll over (up to 3 months)',
+      'Up to 5 pages',
+      'Custom layout design',
+      'Mobile responsive design',
+      'Basic UI style guide',
+      'Delivery: 7-10 days',
     ],
-    footnote: 'For brands that need continuous, long-term collaboration.',
-    cta: 'Talk About Retainer',
+    footnote: 'For a straightforward site with no extra complexity.',
+    cta: 'Get Started',
     featured: false,
   },
   {
-    name: 'Starter Build',
-    price: '[₱PRICE]',
-    unit: 'one-time',
-    desc: 'A clean site ready to launch in 1-2 weeks. For business owners who need a solid presence without the complexity.',
+    name: 'Business Design',
+    price: '₱9,999',
+    unit: '',
+    desc: 'A more complete design for businesses ready to stand out.',
     features: [
-      'Up to 6 pages',
-      'CMS setup',
-      'Mid-level animations & interactions',
-      'Technical SEO setup',
-      'Launch within 1-2 weeks',
-      'Editor training after launch',
+      'Up to 7 pages',
+      'Custom UI/UX design',
+      'Mobile and tablet responsive',
+      'Design handed off development ready',
+      'Revisions included',
+      'Delivery: 14-18 days',
     ],
-    footnote: 'For new sites or migrations that need a fast, clean start.',
-    cta: 'Start This Build',
+    footnote: 'Our most requested package.',
+    cta: 'Get Started',
     featured: true,
   },
   {
-    name: 'Custom Project',
-    price: 'Book a Call',
+    name: 'Premium Design',
+    price: '₱11,999',
     unit: '',
-    desc: 'High-end development for complex scopes. Every project is different, so every quote starts with a conversation.',
+    desc: 'High end, fully custom design for larger or more complex sites.',
     features: [
-      'Advanced interaction & animation systems',
-      'Scalable CMS architecture, multi-collection',
-      'Complex layouts & modular components',
-      'Integration-ready, API-driven structure',
-      '14 days post-launch support included',
+      'Up to 12 pages',
+      'High end custom design',
+      'Advanced UI/UX and animations',
+      'Design system and components',
+      'Unlimited revisions',
+      'Delivery: 20-25 days',
     ],
     footnote: 'For projects that go beyond the basics.',
+    cta: 'Book a Call',
+    featured: false,
+  },
+];
+
+const seoTiers = [
+  {
+    name: 'Basic',
+    price: '₱1,500',
+    unit: '/ month',
+    desc: 'For small sites just getting started with search visibility.',
+    features: [
+      'Keyword research (5 keywords)',
+      '5 blog posts per month',
+      'Google Search Console setup',
+      'Monthly performance report',
+    ],
+    footnote: 'A steady starting point for organic search.',
+    cta: 'Get Started',
+    featured: false,
+  },
+  {
+    name: 'Intermediate',
+    price: '₱3,200',
+    unit: '/ month',
+    desc: 'For businesses ready to actively grow organic traffic.',
+    features: [
+      'Keyword research (15 keywords)',
+      '10 blog posts per month',
+      '5 forums participation',
+      'Google Search Console setup',
+      'Monthly performance report',
+    ],
+    footnote: 'Our most requested SEO package.',
+    cta: 'Get Started',
+    featured: true,
+  },
+  {
+    name: 'Expert',
+    price: '₱5,000+',
+    unit: '/ month',
+    desc: 'For competitive markets that need consistent, aggressive growth.',
+    features: [
+      'Keyword research (30 keywords)',
+      '15 blog posts per month',
+      '10 forums participation',
+      'Site audit',
+      '3-5 link building (additional budget)',
+      'Google Search Console setup',
+      'Monthly performance report',
+    ],
+    footnote: 'For businesses ready to lead their category.',
     cta: 'Book a Call',
     featured: false,
   },
@@ -53,14 +108,56 @@ const tiers = [
 ---
 
 <section class="services section" id="services">
+  <CloudLayer />
   <div class="section-inner">
     <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Services</p>
     <h2 class="services-title warm-title" data-reveal>Same standard,<br />sized to what you need now.</h2>
 
-    <div class="tier-grid">
+    <div class="service-tabs" role="tablist" data-reveal>
+      <button type="button" class="service-tab is-active" data-tab-btn="webdev" role="tab" aria-selected="true">
+        Web Development
+      </button>
+      <button type="button" class="service-tab" data-tab-btn="seo" role="tab" aria-selected="false">
+        SEO
+      </button>
+    </div>
+
+    <div class="tier-grid" data-tab-panel="webdev">
       {
-        tiers.map((t) => (
+        webDevTiers.map((t) => (
           <article class:list={['tier-card', { 'tier-card--featured': t.featured }]} data-reveal>
+            {t.featured && <span class="tier-flag">Most Booked</span>}
+            <h3>{t.name}</h3>
+            <p class="tier-price">
+              {t.price}
+              {t.unit && <span>{t.unit}</span>}
+            </p>
+            <p class="tier-desc">{t.desc}</p>
+            <ul class="tier-features">
+              {t.features.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+            <p class="tier-footnote">{t.footnote}</p>
+            <a
+              class:list={[
+                'btn-warm',
+                'tier-cta',
+                t.featured ? 'btn-warm--primary' : 'btn-warm--ghost',
+              ]}
+              href="/contact"
+            >
+              {t.cta}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="tier-grid" data-tab-panel="seo" hidden>
+      {
+        seoTiers.map((t) => (
+          <article class:list={['tier-card', { 'tier-card--featured': t.featured }]}>
             {t.featured && <span class="tier-flag">Most Booked</span>}
             <h3>{t.name}</h3>
             <p class="tier-price">
@@ -93,6 +190,7 @@ const tiers = [
 
 <style>
   .services {
+    position: relative;
     background: var(--a-bg);
   }
 
@@ -102,12 +200,50 @@ const tiers = [
     max-width: 18ch;
   }
 
+  .service-tabs {
+    display: inline-flex;
+    gap: 0.3rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding: 0.3rem;
+    border-radius: 999px;
+    background: var(--a-card);
+    box-shadow: 0 16px 36px -30px var(--a-shadow);
+  }
+
+  .service-tab {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--a-muted);
+    background: none;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.4rem;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .service-tab.is-active {
+    background: var(--a-coral);
+    color: #fff;
+  }
+
   .tier-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
-    margin-top: clamp(2.5rem, 5vw, 4rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
     align-items: stretch;
+  }
+
+  /* The [hidden] attribute's default display:none comes from the browser's
+     UA stylesheet, which the plain .tier-grid rule above (author CSS)
+     silently overrides regardless of specificity — author styles always
+     beat UA defaults. This re-asserts it with a selector specific enough
+     to win back. */
+  .tier-grid[hidden] {
+    display: none;
   }
 
   .tier-card {

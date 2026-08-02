@@ -349,6 +349,28 @@ interface SpotlightQuote {
   accent: string;
 }
 
+function initServiceTabs() {
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-tab-btn]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-tab-panel]'));
+  if (buttons.length === 0 || panels.length === 0) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tabBtn;
+
+      buttons.forEach((b) => {
+        const isActive = b === btn;
+        b.classList.toggle('is-active', isActive);
+        b.setAttribute('aria-selected', String(isActive));
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.tabPanel !== target;
+      });
+    });
+  });
+}
+
 function initTestimonialsSpotlight() {
   const root = document.querySelector<HTMLElement>('[data-quote-spotlight]');
   if (!root) return;
@@ -420,29 +442,6 @@ function initTestimonialsSpotlight() {
   render();
   prevBtn?.addEventListener('click', () => goTo(index - 1));
   nextBtn?.addEventListener('click', () => goTo(index + 1));
-}
-
-function initWorkVideos() {
-  const videos = gsap.utils.toArray<HTMLVideoElement>('.work-card-video');
-  if (videos.length === 0) return;
-
-  const viewport = document.querySelector<HTMLElement>('[data-work-viewport]');
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target as HTMLVideoElement;
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      });
-    },
-    { root: viewport, rootMargin: '200px', threshold: 0.1 }
-  );
-
-  videos.forEach((video) => observer.observe(video));
 }
 
 function initDevicePreview() {
@@ -857,8 +856,8 @@ function init() {
   initMobileMenu();
   initReveals();
   initCapabilitiesLine();
+  initServiceTabs();
   initTestimonialsSpotlight();
-  initWorkVideos();
   initDevicePreview();
   initHeroReveal();
   initHeroNetwork();

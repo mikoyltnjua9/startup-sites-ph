@@ -1,24 +1,73 @@
 ---
+import CloudLayer from './CloudLayer.astro';
+
 const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender'] as const;
 
 const projects = [
-  { num: '01', tags: ['Web Design', 'SEO'], name: '[Client Name]', blurb: 'A landing page built to earn investor trust and convert waitlist signups for an early stage business.' },
-  { num: '02', tags: ['Web Development', 'Content'], name: '[Client Name]', blurb: 'A content managed site handling hundreds of product and vendor listings for a growing marketplace.' },
-  { num: '03', tags: ['Web Design', 'Branding'], name: '[Client Name]', blurb: 'A launch site with scroll driven storytelling for a direct to consumer brand.' },
-  { num: '04', tags: ['Web Development', 'Localization'], name: '[Client Name]', blurb: 'A two language site for a logistics business expanding into new regions.' },
-  { num: '05', tags: ['Performance', 'SEO'], name: '[Client Name]', blurb: 'A full site rebuild focused on faster load times and stronger organic search visibility.' },
-  { num: '06', tags: ['Web Development', 'Integrations'], name: '[Client Name]', blurb: 'A site wired into the client’s CRM and scheduling tools for a fully connected sales process.' },
-  { num: '07', tags: ['Web Development', 'SEO'], name: '[Client Name]', blurb: 'A fast loading marketing site rebuilt ahead of a major business milestone.' },
-  { num: '08', tags: ['Web Design', 'Local SEO'], name: '[Client Name]', blurb: 'A multi location services site with a location finder and online booking.' },
-  { num: '09', tags: ['Social Media', 'Branding'], name: '[Client Name]', blurb: 'A product launch built around one focused web and social media campaign.' },
-  { num: '10', tags: ['Web Development', 'Ecommerce'], name: '[Client Name]', blurb: 'An online store with live inventory pulled straight from the client’s commerce platform.' },
+  {
+    num: '01',
+    tags: ['Web Design', 'Rental'],
+    name: 'Sweeney Properties',
+    url: 'https://sweeneyleasing.com/',
+    blurb: 'A rental property leasing site built to showcase available units and make inquiries easy.',
+    shot: 'sweeney-properties',
+  },
+  {
+    num: '02',
+    tags: ['Web Design', 'Construction'],
+    name: 'Vetmax Construction',
+    url: 'https://vetmaxconstruction.com/',
+    blurb: 'A construction company site built to showcase past projects and bring in new leads.',
+    shot: 'vetmax-construction',
+  },
+  {
+    num: '03',
+    tags: ['Web Design', 'Accounting'],
+    name: 'DDC Consulting Inc.',
+    url: 'https://ddcconsultinginc.com/',
+    blurb: 'An accounting firm site built around clarity, trust, and easy client onboarding.',
+    shot: 'ddc-consulting',
+  },
+  {
+    num: '04',
+    tags: ['Web Design', 'Retail'],
+    name: 'Fujifilm-X',
+    url: 'https://www.fujifilm-x.com/en-ph/',
+    blurb: 'A regional site for the Fujifilm X series camera lineup.',
+    shot: 'fujifilm',
+  },
+  {
+    num: '05',
+    tags: ['Web Design', 'SEO'],
+    name: 'Web To Support',
+    url: 'https://webtosupport.com/',
+    blurb: 'A lead generation website built around SEO performance for an IT support company.',
+    shot: 'webtosupport',
+  },
+  {
+    num: '06',
+    tags: ['Ecommerce', 'Retail'],
+    name: 'Rally Sports PH',
+    url: 'https://rallysportsph.com/',
+    blurb: 'An online store for a badminton and pickleball retailer, built to move product online.',
+    shot: 'rallysports',
+  },
+  {
+    num: '07',
+    tags: ['Web Design', 'Legal'],
+    name: 'LA Attorney',
+    url: 'https://laattorney.com/',
+    blurb: 'A law firm site built to establish credibility and convert visitors into consultations.',
+    shot: 'la-attorney',
+  },
 ].map((p, i) => ({ ...p, accent: accents[i % accents.length] }));
 ---
 
 <section class="work" id="work">
+  <CloudLayer />
   <div class="work-head section-inner">
-    <p class="eyebrow-warm eyebrow-warm--on-dark" data-reveal><span class="eyebrow-dot"></span>Selected Work</p>
-    <h2 class="work-title warm-title warm-title--on-dark" data-reveal>Built to launch,<br />made to perform.</h2>
+    <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Selected Work</p>
+    <h2 class="work-title warm-title" data-reveal>Built to launch,<br />made to perform.</h2>
     <p class="work-sub" data-reveal>
       A look at the kind of work we do. Real client names, videos, and
       outcomes go here once projects are ready to publish.
@@ -30,15 +79,18 @@ const projects = [
       {
         projects.map((p) => (
           <li class={`work-card work-card--${p.accent}`} data-work-card>
-            <video
-              class="work-card-video"
-              src="/videos/work-placeholder.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-              aria-hidden="true"
+            <a
+              class="work-card-link"
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${p.name} (opens in a new tab)`}
             />
+            <div class="work-card-bg" aria-hidden="true">
+              <div class="work-card-blob work-card-blob--a" />
+              <div class="work-card-blob work-card-blob--b" />
+              <div class="work-card-blob work-card-blob--c" />
+            </div>
             <div class="work-card-overlay" aria-hidden="true" />
 
             <div class="work-card-top">
@@ -53,42 +105,13 @@ const projects = [
             <div class="device-wrap">
               <div class="device">
                 <div class="device-screen">
-                  <div class="device-shot" data-device-shot>
-                    <div class="shot-nav">
-                      <i /><i /><i />
-                    </div>
-                    <div class="shot-hero">
-                      <span>HERO</span>
-                    </div>
-                    <div class="shot-block shot-block--wide">
-                      <span>SECTION</span>
-                    </div>
-                    <div class="shot-row">
-                      <div class="shot-block">
-                        <span>01</span>
-                      </div>
-                      <div class="shot-block">
-                        <span>02</span>
-                      </div>
-                      <div class="shot-block">
-                        <span>03</span>
-                      </div>
-                    </div>
-                    <div class="shot-block shot-block--wide">
-                      <span>TESTIMONIALS</span>
-                    </div>
-                    <div class="shot-row">
-                      <div class="shot-block">
-                        <span>04</span>
-                      </div>
-                      <div class="shot-block">
-                        <span>05</span>
-                      </div>
-                    </div>
-                    <div class="shot-footer">
-                      <span>FOOTER</span>
-                    </div>
-                  </div>
+                  <img
+                    class="device-shot"
+                    data-device-shot
+                    src={`/work/${p.shot}.webp`}
+                    alt=""
+                    loading="lazy"
+                  />
                   <div class="device-hint" aria-hidden="true">Hover to preview</div>
                 </div>
                 <div class="device-stand" aria-hidden="true">
@@ -112,8 +135,8 @@ const projects = [
 <style>
   .work {
     position: relative;
-    background: var(--a-surface-dark);
-    color: #fff;
+    background: var(--a-bg);
+    color: var(--a-ink);
     height: 100svh;
     overflow: hidden;
     display: flex;
@@ -151,7 +174,7 @@ const projects = [
 
   .work-sub {
     font-family: var(--font-body);
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--a-muted);
     max-width: 48ch;
     margin-top: 0.65rem;
     line-height: 1.5;
@@ -221,13 +244,122 @@ const projects = [
     overflow: hidden;
   }
 
-  .work-card-video {
+  /* Per-card accent tint for the lava-lamp blobs below, set once here
+     rather than repeated on every descendant that needs it. */
+  .work-card--coral {
+    --card-accent: rgba(255, 107, 91, 0.65);
+  }
+  .work-card--blue {
+    --card-accent: rgba(77, 163, 255, 0.65);
+  }
+  .work-card--mint {
+    --card-accent: rgba(52, 199, 154, 0.65);
+  }
+  .work-card--yellow {
+    --card-accent: rgba(255, 201, 77, 0.65);
+  }
+  .work-card--lavender {
+    --card-accent: rgba(155, 140, 255, 0.65);
+  }
+
+  /* Sits above every other layer so the whole card is one click target,
+     but paints nothing itself — the drag-vs-click guard already built into
+     initWorkDrag (site.ts) suppresses this link's navigation when the
+     pointer actually dragged the track instead of clicking. */
+  .work-card-link {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  .work-card-bg {
+    position: absolute;
+    inset: 0;
     z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Lava-lamp blobs — soft, blurred, glowing circles that wander slowly
+     around the card, tinted to that card's own accent color. Each blob
+     gets its own keyframes (rather than sharing one) so the three drift
+     on independent, non-repeating-looking paths instead of moving in
+     lockstep. */
+  .work-card-blob {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--card-accent);
+    filter: blur(50px);
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+
+  .work-card-blob--a {
+    width: 260px;
+    height: 260px;
+    top: 8%;
+    left: -15%;
+    animation: work-blob-a 17s ease-in-out infinite;
+  }
+
+  .work-card-blob--b {
+    width: 210px;
+    height: 210px;
+    top: 52%;
+    right: -15%;
+    animation: work-blob-b 20s ease-in-out infinite;
+    animation-delay: -5s;
+  }
+
+  .work-card-blob--c {
+    width: 190px;
+    height: 190px;
+    bottom: -8%;
+    left: 18%;
+    animation: work-blob-c 23s ease-in-out infinite;
+    animation-delay: -11s;
+  }
+
+  @keyframes work-blob-a {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(40px, 50px) scale(1.15);
+    }
+    50% {
+      transform: translate(15px, 110px) scale(0.9);
+    }
+    75% {
+      transform: translate(-25px, 40px) scale(1.05);
+    }
+  }
+
+  @keyframes work-blob-b {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    30% {
+      transform: translate(-50px, -35px) scale(1.1);
+    }
+    60% {
+      transform: translate(-15px, 50px) scale(0.92);
+    }
+  }
+
+  @keyframes work-blob-c {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    35% {
+      transform: translate(30px, -60px) scale(1.2);
+    }
+    70% {
+      transform: translate(-20px, -25px) scale(0.9);
+    }
   }
 
   .work-card-overlay {
@@ -368,117 +500,16 @@ const projects = [
     opacity: 0;
   }
 
-  /* Fake wireframe "screenshot" that scrolls into view on hover */
+  /* Real screenshot, panned into view on hover — same mechanic as the
+     Hero's device preview (initDevicePreview in site.ts already targets
+     any [data-device-shot] inside a [data-work-card], unchanged). */
   .device-shot {
     position: absolute;
     inset: 0 0 auto 0;
-    height: 260%;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    width: 100%;
+    height: auto;
+    display: block;
     will-change: transform;
-  }
-
-  .shot-nav {
-    height: 7%;
-    flex-shrink: 0;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0 0.5rem;
-  }
-
-  .shot-nav i {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    font-style: normal;
-  }
-
-  .work-card--coral .shot-nav i:first-child {
-    background: var(--a-coral);
-  }
-  .work-card--blue .shot-nav i:first-child {
-    background: var(--a-blue);
-  }
-  .work-card--mint .shot-nav i:first-child {
-    background: var(--a-mint);
-  }
-  .work-card--yellow .shot-nav i:first-child {
-    background: var(--a-yellow);
-  }
-  .work-card--lavender .shot-nav i:first-child {
-    background: var(--a-lavender);
-  }
-
-  .shot-nav i:not(:first-child) {
-    background: rgba(255, 255, 255, 0.16);
-  }
-
-  .shot-hero {
-    height: 26%;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 70%);
-    display: flex;
-    align-items: flex-end;
-    padding: 0.5rem;
-  }
-
-  .shot-block {
-    flex: 1;
-    height: 14%;
-    min-height: 40px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
-    display: flex;
-    align-items: flex-end;
-    padding: 0.4rem;
-  }
-
-  .shot-block--wide {
-    height: 18%;
-    min-height: 52px;
-  }
-
-  .shot-row {
-    display: flex;
-    gap: 0.4rem;
-    height: 16%;
-    min-height: 46px;
-    flex-shrink: 0;
-  }
-
-  .shot-row .shot-block {
-    height: 100%;
-  }
-
-  .shot-footer {
-    height: 10%;
-    min-height: 30px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-
-  .shot-hero span,
-  .shot-block span,
-  .shot-footer span {
-    font-family: var(--font-body);
-    font-weight: 500;
-    font-size: 0.55rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
   }
 
   .work-card-foot {

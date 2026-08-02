@@ -1,4 +1,6 @@
 ---
+import CloudLayer from './CloudLayer.astro';
+
 const accents = ['coral', 'blue', 'mint', 'yellow', 'lavender', 'coral'] as const;
 
 const phases = [
@@ -42,6 +44,7 @@ const phases = [
 ---
 
 <section class="about section" id="about">
+  <CloudLayer />
   <div class="section-inner">
     <p class="eyebrow-warm" data-reveal><span class="eyebrow-dot"></span>Our Journey</p>
     <h2 class="about-title warm-title" data-reveal>Six phases,<br />one growing agency.</h2>
@@ -67,6 +70,7 @@ const phases = [
 
 <style>
   .about {
+    position: relative;
     background: var(--a-bg);
   }
 

@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const lastUpdated = 'August 3, 2026';
+---
+
+<BaseLayout
+  title="Terms of Service | Startup Sites PH"
+  description="The terms that apply when you work with Startup Sites PH or use this website."
+>
+  <Nav />
+  <main>
+    <section class="legal-hero">
+      <div class="section-inner legal-hero-inner">
+        <p class="eyebrow-warm"><span class="eyebrow-dot"></span>Terms of Service</p>
+        <h1 class="warm-title legal-title">The terms behind our work.</h1>
+        <p class="legal-updated">Last updated: {lastUpdated}</p>
+      </div>
+    </section>
+
+    <section class="legal-body section">
+      <div class="section-inner legal-content warm-card">
+        <p>
+          These terms apply when you use this website or engage Startup Sites
+          PH ("we", "us", "our") for web development, SEO, or social media
+          marketing services. By using this site or working with us, you
+          agree to the terms below.
+        </p>
+
+        <h2>Our services</h2>
+        <p>
+          We provide website design and development, search engine
+          optimization, social media marketing, and ongoing website support.
+          The specific scope, deliverables, timeline, and price for any
+          project are agreed with you directly, typically through a quote or
+          proposal sent after an initial conversation.
+        </p>
+
+        <h2>Quotes and payment</h2>
+        <p>
+          Pricing shown on this website is a general guide and may vary based
+          on your project's specific requirements. A final price is confirmed
+          before work begins. Unless agreed otherwise in writing, an upfront
+          deposit is required to start a project, with the balance due upon
+          or before delivery.
+        </p>
+
+        <h2>Project timelines</h2>
+        <p>
+          Delivery estimates shown on this site are typical timeframes and not
+          guarantees. Actual timelines depend on project scope, how quickly
+          you provide feedback and content, and the complexity of revisions
+          requested.
+        </p>
+
+        <h2>Revisions</h2>
+        <p>
+          Each service package includes a defined number of revisions, or
+          unlimited revisions where stated. Requests that fall outside the
+          agreed project scope may be quoted separately.
+        </p>
+
+        <h2>Ownership</h2>
+        <p>
+          Once a project is paid in full, you own the final website files and
+          content created specifically for you. Any third party assets,
+          licensed stock media, plugins, or tools used to build the site
+          remain subject to their own license terms.
+        </p>
+
+        <h2>Ongoing services</h2>
+        <p>
+          SEO, social media marketing, and support services billed monthly
+          continue until either party cancels with reasonable notice, as
+          agreed at the start of the engagement. Results from SEO and social
+          media marketing depend on many factors outside our direct control,
+          including search engines and platform algorithms, and are not
+          guaranteed.
+        </p>
+
+        <h2>Limitation of liability</h2>
+        <p>
+          We do our best to deliver reliable, well built work, but we are not
+          liable for indirect or consequential losses arising from the use of
+          a website or marketing service we provide, including lost revenue,
+          lost data, or third party service outages.
+        </p>
+
+        <h2>Website use</h2>
+        <p>
+          This website and its content are provided for general informational
+          purposes. You may not copy, resell, or misuse content from this
+          site without our permission.
+        </p>
+
+        <h2>Changes to these terms</h2>
+        <p>
+          We may update these terms from time to time. Changes will be posted
+          on this page with an updated revision date.
+        </p>
+
+        <h2>Contact us</h2>
+        <p>
+          Questions about these terms can be sent to
+          <a href="mailto:admin@startupsitesph.com">admin@startupsitesph.com</a>.
+        </p>
+
+        <p class="legal-disclaimer">
+          These terms are provided for general informational purposes and are
+          not a substitute for legal advice. If you need terms reviewed for a
+          specific legal or regulatory requirement, please consult a qualified
+          lawyer.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    position: relative;
+    padding: 8rem 0 2rem;
+    background: var(--a-bg);
+  }
+
+  .legal-hero-inner {
+    max-width: 640px;
+  }
+
+  .legal-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    margin-top: 1rem;
+    max-width: 18ch;
+  }
+
+  .legal-updated {
+    margin-top: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--a-muted);
+  }
+
+  .legal-body {
+    background: var(--a-bg);
+    padding-top: 0;
+  }
+
+  .legal-content {
+    max-width: 760px;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    font-family: var(--font-body);
+    color: var(--a-ink);
+    line-height: 1.65;
+  }
+
+  .legal-content h2 {
+    font-family: var(--font-display-warm);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-top: 2.25rem;
+  }
+
+  .legal-content h2:first-of-type {
+    margin-top: 1.5rem;
+  }
+
+  .legal-content p {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--a-muted);
+  }
+
+  .legal-content a {
+    color: var(--a-coral);
+    text-decoration: none;
+  }
+
+  .legal-content a:hover {
+    text-decoration: underline;
+  }
+
+  .legal-disclaimer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--a-ink) 10%, transparent);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 899px) {
+    .legal-hero {
+      padding-top: 6rem;
+    }
+  }
+</style>

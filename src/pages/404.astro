@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | Startup Sites PH"
+  description="The page you're looking for doesn't exist. Head back to the Startup Sites PH homepage."
+>
+  <Nav />
+  <main>
+    <section class="not-found">
+      <div class="section-inner not-found-inner">
+        <p class="eyebrow-warm"><span class="eyebrow-dot"></span>404</p>
+        <h1 class="warm-title not-found-title">This page took a wrong turn.</h1>
+        <p class="not-found-sub">
+          The page you're looking for doesn't exist, or it may have moved.
+          Let's get you back on track.
+        </p>
+        <a class="btn-warm btn-warm--primary" href="/">Back to homepage</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .not-found {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: var(--a-bg);
+    padding: 8rem 0;
+  }
+
+  .not-found-inner {
+    max-width: 560px;
+  }
+
+  .not-found-title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin-top: 1rem;
+    max-width: 16ch;
+  }
+
+  .not-found-sub {
+    margin-top: 1.25rem;
+    max-width: 42ch;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--a-muted);
+  }
+
+  .not-found-inner .btn-warm {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 899px) {
+    .not-found {
+      padding-top: 6rem;
+    }
+  }
+</style>
