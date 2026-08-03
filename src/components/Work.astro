@@ -130,6 +130,17 @@ const projects = [
       }
     </ul>
   </div>
+
+  <button type="button" class="work-arrow work-arrow--prev" data-work-prev aria-label="Previous project">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 6l-6 6 6 6" />
+    </svg>
+  </button>
+  <button type="button" class="work-arrow work-arrow--next" data-work-next aria-label="Next project">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 6l6 6-6 6" />
+    </svg>
+  </button>
 </section>
 
 <style>
@@ -242,6 +253,76 @@ const projects = [
     display: flex;
     flex-direction: column;
     overflow: hidden;
+  }
+
+  /* Smaller cards below desktop: the fixed 480x680 card doesn't fit the
+     shorter, narrower viewport (it was clipping vertically on phones), and
+     showing a peek of the next card is a better cue that this scrolls. */
+  @media (max-width: 899px) {
+    .work-card {
+      flex-basis: 320px;
+      width: 320px;
+      height: 453px;
+      padding: 1.4rem;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .work-card {
+      flex-basis: 250px;
+      width: 250px;
+      height: 354px;
+      padding: 1.15rem;
+    }
+  }
+
+  /* Prev/next controls — the desktop pin (>=900px) already drives horizontal
+     movement via the vertical scroll-jack, so these only make sense (and
+     only show) below that breakpoint. */
+  .work-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    z-index: 10;
+    background: var(--a-card);
+    color: var(--a-ink);
+    box-shadow: 0 12px 30px -18px var(--a-shadow);
+    transition: transform 0.3s var(--ease-bounce);
+  }
+
+  .work-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .work-arrow:hover {
+    transform: translateY(-50%) translateY(-2px) scale(1.06);
+  }
+
+  .work-arrow:disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .work-arrow--prev {
+    left: 0.6rem;
+  }
+
+  .work-arrow--next {
+    right: 0.6rem;
+  }
+
+  @media (min-width: 900px) {
+    .work-arrow {
+      display: none;
+    }
   }
 
   /* Per-card accent tint for the lava-lamp blobs below, set once here

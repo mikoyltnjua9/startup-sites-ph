@@ -346,6 +346,42 @@ function initWorkDrag() {
   makeDragScroll(viewport, () => viewport.classList.contains('is-pinned'));
 }
 
+// Prev/next buttons for the Work viewport (CSS-hidden at the >=900px
+// breakpoint where the pin takes over, so no need to guard that here).
+function initWorkArrows() {
+  const viewport = document.querySelector<HTMLElement>('[data-work-viewport]');
+  const track = document.querySelector<HTMLElement>('[data-work-track]');
+  const prevBtn = document.querySelector<HTMLButtonElement>('[data-work-prev]');
+  const nextBtn = document.querySelector<HTMLButtonElement>('[data-work-next]');
+  if (!viewport || !track || !prevBtn || !nextBtn) return;
+
+  const step = () => {
+    const card = track.querySelector<HTMLElement>('.work-card');
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    return (card?.getBoundingClientRect().width ?? viewport.clientWidth) + gap;
+  };
+
+  const updateDisabled = () => {
+    // The track's own left/right padding (--edge) means the resting scroll
+    // position at either end isn't exactly 0/max — it's off by that amount.
+    const edge = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+    prevBtn.disabled = viewport.scrollLeft <= edge + 2;
+    nextBtn.disabled = viewport.scrollLeft >= maxScroll - edge - 2;
+  };
+
+  prevBtn.addEventListener('click', () => {
+    viewport.scrollBy({ left: -step(), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    viewport.scrollBy({ left: step(), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+
+  viewport.addEventListener('scroll', updateDisabled, { passive: true });
+  updateDisabled();
+}
+
 interface SpotlightQuote {
   quote: string;
   name: string;
@@ -857,6 +893,7 @@ function init() {
   // bakes in stale, pre-inflation offsets that refresh() doesn't correct.
   initWorkScroll();
   initWorkDrag();
+  initWorkArrows();
   initNav(lenis);
   initMobileMenu();
   initReveals();
