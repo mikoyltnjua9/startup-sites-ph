@@ -1,6 +1,6 @@
 ---
 // Homepage-section links use a path-prefixed hash (/#id) so they still
-// resolve correctly when clicked from a standalone page like /contact —
+// resolve correctly when clicked from a standalone page like /privacy-policy —
 // site.ts smooth-scrolls in place when already on the matching page, and
 // otherwise just lets the browser navigate there natively.
 const links = [
@@ -12,8 +12,9 @@ const links = [
   { id: 'services', label: 'Services', href: '/#services' },
   { id: 'clients', label: 'Clients', href: '/#clients' },
   { id: 'faq', label: 'FAQ', href: '/#faq' },
-  { id: 'contact', label: 'Contact', href: '/contact' },
 ];
+
+const bookingUrl = 'https://calendly.com/admin-startupsitesph/30min';
 
 const clientLogos = [
   { name: 'Sweeney Properties', file: 'sweeney' },
@@ -94,7 +95,13 @@ const clientLogos = [
       admin@startupsitesph.com
     </a>
 
-    <a class="rig-piece rig-cta" href="/contact" data-rail-tick data-flip="cta">
+    <a
+      class="rig-piece rig-cta"
+      href={bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-flip="cta"
+    >
       Book a Call
     </a>
   </div>
@@ -148,7 +155,7 @@ const clientLogos = [
       ))
     }
   </ol>
-  <a class="mobile-cta" href="/contact" data-mobile-link>Book a Call</a>
+  <a class="mobile-cta" href={bookingUrl} target="_blank" rel="noopener noreferrer" data-mobile-link>Book a Call</a>
 </div>
 
 <style>

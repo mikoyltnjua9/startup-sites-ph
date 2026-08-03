@@ -86,7 +86,7 @@ function initNav(lenis: Lenis | null) {
   const mm = gsap.matchMedia();
 
   mm.add('(min-width: 900px)', () => {
-    // Pages without a hero (e.g. /contact) have nothing to dock across —
+    // Pages without a hero (e.g. /privacy-policy) have nothing to dock across —
     // render the sidebar permanently docked instead of wiring a trigger to
     // a '#home' that doesn't exist on this page.
     if (!document.getElementById('home')) {
@@ -175,10 +175,16 @@ function initNav(lenis: Lenis | null) {
 
   document.querySelectorAll<HTMLAnchorElement>('[data-rail-tick], [data-mobile-link]').forEach((link) => {
     link.addEventListener('click', (event) => {
+      // A mobile-menu link should close the menu whether it's a smooth
+      // scroll target, a real page link, or an external booking link
+      // opening in a new tab — the underlying page shouldn't stay hidden
+      // behind an open menu once the tap has been acted on.
+      if (link.hasAttribute('data-mobile-link')) closeMobileMenu();
+
       const href = link.getAttribute('href');
       if (!href) return;
       const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return; // real page link (e.g. /contact) — let the browser navigate
+      if (hashIndex === -1) return; // real/external link — let the browser navigate
       const hash = href.slice(hashIndex);
       const pathPart = href.slice(0, hashIndex);
       // A '/#id' link clicked from a different page needs a real navigation
@@ -189,7 +195,6 @@ function initNav(lenis: Lenis | null) {
       if (!target) return;
       event.preventDefault();
       scrollToTarget(lenis, target);
-      closeMobileMenu();
     });
   });
 }

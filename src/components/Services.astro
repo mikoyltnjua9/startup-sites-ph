@@ -1,6 +1,8 @@
 ---
 import CloudLayer from './CloudLayer.astro';
 
+const bookingUrl = 'https://calendly.com/admin-startupsitesph/30min';
+
 const webDevTiers = [
   {
     name: 'Basic Design',
@@ -145,7 +147,9 @@ const seoTiers = [
                 'tier-cta',
                 t.featured ? 'btn-warm--primary' : 'btn-warm--ghost',
               ]}
-              href="/contact"
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {t.cta}
             </a>
@@ -177,7 +181,9 @@ const seoTiers = [
                 'tier-cta',
                 t.featured ? 'btn-warm--primary' : 'btn-warm--ghost',
               ]}
-              href="/contact"
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {t.cta}
             </a>
