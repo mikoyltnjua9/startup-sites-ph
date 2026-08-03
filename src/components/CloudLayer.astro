@@ -57,4 +57,34 @@
       transform: translateY(-16px) scale(1.02);
     }
   }
+
+  /* Every section puts its eyebrow/heading at the top-left of a much
+     shorter box on mobile, so the desktop placement/size above sits right
+     on top of that text instead of floating harmlessly in empty space. */
+  @media (max-width: 640px) {
+    .cloud--a {
+      width: 90px;
+      top: 32%;
+      left: 6%;
+    }
+
+    .cloud--b {
+      width: 70px;
+      top: 58%;
+      right: 4%;
+    }
+
+    .cloud--c {
+      width: 80px;
+      top: 80%;
+      left: 10%;
+    }
+  }
+
+  /* Dark mode's darker section backgrounds make the white cloud read as a
+     much harsher, more distracting shape than on light backgrounds — dial
+     it back rather than changing the light-mode look. */
+  :root[data-theme='dark'] .cloud {
+    opacity: 0.5;
+  }
 </style>
