@@ -35,21 +35,27 @@ $search = trim((string) ($_GET['q'] ?? ''));
 $where = [];
 $params = [];
 if ($stageFilter !== '' && isset(STAGES[$stageFilter])) {
-    $where[] = 'stage = ?';
+    $where[] = 'c.stage = ?';
     $params[] = $stageFilter;
 }
 if ($serviceFilter !== '' && isset(SERVICE_TYPES[$serviceFilter])) {
-    $where[] = 'service_type = ?';
+    $where[] = 'c.service_type = ?';
     $params[] = $serviceFilter;
 }
 if ($search !== '') {
-    $where[] = '(company_name LIKE ? OR contact_name LIKE ?)';
+    $where[] = '(c.company_name LIKE ? OR c.contact_name LIKE ?)';
     $params[] = '%' . $search . '%';
     $params[] = '%' . $search . '%';
 }
 $whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
-$stmt = $pdo->prepare("SELECT * FROM clients $whereSql ORDER BY updated_at DESC");
+$stmt = $pdo->prepare(
+    "SELECT c.*, COALESCE(SUM(p.amount), 0) AS paid_total
+     FROM clients c LEFT JOIN payments p ON p.client_id = c.id
+     $whereSql
+     GROUP BY c.id
+     ORDER BY c.updated_at DESC"
+);
 $stmt->execute($params);
 $clients = $stmt->fetchAll();
 
@@ -99,7 +105,7 @@ require __DIR__ . '/includes/layout_top.php';
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($clients as $c): [$payLabel, $payClass] = payment_status((float) $c['total_amount'], (float) $c['amount_paid']); ?>
+          <?php foreach ($clients as $c): [$payLabel, $payClass] = payment_status((float) $c['total_amount'], (float) $c['paid_total']); ?>
             <tr>
               <td class="wrap-cell"><a class="company-link" href="client.php?id=<?= (int) $c['id'] ?>"><?= h($c['company_name']) ?></a></td>
               <td class="wrap-cell"><?= h($c['contact_name']) ?></td>
