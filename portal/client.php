@@ -364,38 +364,6 @@ require __DIR__ . '/includes/layout_top.php';
         <button type="submit" class="btn btn--small">Add task</button>
       </form>
     </div>
-  </div>
-
-  <div>
-    <div class="section-title" id="payments"><h2>Payments</h2></div>
-    <div class="card">
-      <?php if (empty($payments)): ?>
-        <p class="empty-state">No payments recorded yet.</p>
-      <?php else: ?>
-        <?php foreach ($payments as $p): ?>
-          <div class="list-item">
-            <div>
-              <strong><?= money((float) $p['amount']) ?></strong>
-              <span class="muted"> — <?= date_fmt($p['paid_date']) ?><?= $p['note'] ? ' · ' . h($p['note']) : '' ?></span>
-            </div>
-            <form method="post">
-              <?= csrf_field() ?>
-              <input type="hidden" name="action" value="delete_payment">
-              <input type="hidden" name="payment_id" value="<?= (int) $p['id'] ?>">
-              <button type="submit" class="btn btn--small" aria-label="Delete payment">✕</button>
-            </form>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
-      <form method="post" class="inline-form" style="flex-wrap: wrap; margin-top: 0.9rem;">
-        <?= csrf_field() ?>
-        <input type="hidden" name="action" value="add_payment">
-        <input type="number" step="0.01" min="0" name="amount" placeholder="Amount (₱)" required style="flex: 1 1 100px;">
-        <input type="date" name="paid_date" value="<?= h(date('Y-m-d')) ?>" style="flex: 1 1 130px;">
-        <input type="text" name="note" placeholder="Note (optional)" style="flex: 1 1 120px;">
-        <button type="submit" class="btn btn--small">Add</button>
-      </form>
-    </div>
 
     <div class="section-title" id="maintenance"><h2>Monthly maintenance</h2></div>
     <div class="card">
@@ -438,6 +406,38 @@ require __DIR__ . '/includes/layout_top.php';
       <?php else: ?>
         <p class="muted" style="font-size: 0.82rem; margin-top: 1rem;">Add an email above to enable sending this breakdown.</p>
       <?php endif; ?>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title" id="payments"><h2>Payments</h2></div>
+    <div class="card">
+      <?php if (empty($payments)): ?>
+        <p class="empty-state">No payments recorded yet.</p>
+      <?php else: ?>
+        <?php foreach ($payments as $p): ?>
+          <div class="list-item">
+            <div>
+              <strong><?= money((float) $p['amount']) ?></strong>
+              <span class="muted"> — <?= date_fmt($p['paid_date']) ?><?= $p['note'] ? ' · ' . h($p['note']) : '' ?></span>
+            </div>
+            <form method="post">
+              <?= csrf_field() ?>
+              <input type="hidden" name="action" value="delete_payment">
+              <input type="hidden" name="payment_id" value="<?= (int) $p['id'] ?>">
+              <button type="submit" class="btn btn--small" aria-label="Delete payment">✕</button>
+            </form>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+      <form method="post" class="inline-form" style="flex-wrap: wrap; margin-top: 0.9rem;">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="add_payment">
+        <input type="number" step="0.01" min="0" name="amount" placeholder="Amount (₱)" required style="flex: 1 1 100px;">
+        <input type="date" name="paid_date" value="<?= h(date('Y-m-d')) ?>" style="flex: 1 1 130px;">
+        <input type="text" name="note" placeholder="Note (optional)" style="flex: 1 1 120px;">
+        <button type="submit" class="btn btn--small">Add</button>
+      </form>
     </div>
 
     <div class="section-title" id="notes"><h2>Notes</h2></div>
