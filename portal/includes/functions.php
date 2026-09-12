@@ -69,10 +69,29 @@ function payment_status(float $total, float $paid): array
 
 function require_login(): void
 {
-    if (empty($_SESSION['is_admin'])) {
+    if (empty($_SESSION['user_id'])) {
         header('Location: login.php');
         exit;
     }
+}
+
+function require_admin(): void
+{
+    require_login();
+    if (($_SESSION['role'] ?? '') !== 'admin') {
+        header('Location: my_tasks.php');
+        exit;
+    }
+}
+
+function current_role(): string
+{
+    return $_SESSION['role'] ?? '';
+}
+
+function is_admin(): bool
+{
+    return current_role() === 'admin';
 }
 
 function csrf_token(): string

@@ -1,0 +1,4 @@
+# Uploaded files live on the server, not in git.
+*
+!.gitignore
+!.htaccess

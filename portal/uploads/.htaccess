@@ -1,0 +1,10 @@
+# Uploaded files must never be executable, no matter what someone manages
+# to upload — this is the real security boundary for the upload feature,
+# not the extension/MIME checks in includes/upload.php (defense in depth).
+
+<FilesMatch "\.(php|php3|php4|php5|php7|phtml|pht|phar|cgi|pl|py|sh)$">
+  Require all denied
+</FilesMatch>
+
+Options -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .php5 .php7 .phtml .pht .phar .cgi .pl .py .sh

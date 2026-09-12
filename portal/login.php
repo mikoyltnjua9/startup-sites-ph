@@ -2,15 +2,12 @@
 declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 
-if (!empty($_SESSION['is_admin'])) {
-    redirect('index.php');
+if (!empty($_SESSION['user_id'])) {
+    redirect(is_admin() ? 'index.php' : 'my_tasks.php');
 }
 
-$stmt = $pdo->prepare('SELECT value FROM settings WHERE `key` = ?');
-$stmt->execute(['admin_password_hash']);
-$hash = $stmt->fetchColumn();
-
-if ($hash === false) {
+$userCount = (int) $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
+if ($userCount === 0) {
     redirect('setup.php');
 }
 
@@ -25,16 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($attempts >= 5 && (time() - $lastAttempt) < 30) {
         $error = 'Too many attempts — wait a moment and try again.';
     } else {
+        $email = trim((string) ($_POST['email'] ?? ''));
         $password = (string) ($_POST['password'] ?? '');
-        if (password_verify($password, $hash)) {
-            $_SESSION['is_admin'] = true;
+
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password_hash'])) {
+            $_SESSION['user_id'] = (int) $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['role'] = $user['role'];
             $_SESSION['login_attempts'] = 0;
             session_regenerate_id(true);
-            redirect('index.php');
+            redirect($user['role'] === 'admin' ? 'index.php' : 'my_tasks.php');
         }
         $_SESSION['login_attempts'] = $attempts + 1;
         $_SESSION['login_last_attempt'] = time();
-        $error = 'Incorrect password.';
+        $error = 'Incorrect email or password.';
     }
 }
 
@@ -48,8 +53,11 @@ require __DIR__ . '/includes/layout_top.php';
     <?php if ($error): ?><p class="error-text"><?= h($error) ?></p><?php endif; ?>
     <form method="post">
       <?= csrf_field() ?>
+      <label>Email
+        <input type="email" name="email" required autofocus>
+      </label>
       <label>Password
-        <input type="password" name="password" required autofocus>
+        <input type="password" name="password" required>
       </label>
       <div class="form-actions">
         <button type="submit" class="btn btn--primary">Log in</button>

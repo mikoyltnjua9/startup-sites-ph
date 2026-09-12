@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
-require_login();
+require_admin();
 
 // Stage pipeline counts.
 $stageCounts = array_fill_keys(array_keys(STAGES), 0);
@@ -40,11 +40,54 @@ $stmt = $pdo->prepare(
 $stmt->execute([$soon]);
 $launchDates = $stmt->fetchAll();
 
-// Revenue overview.
-$row = $pdo->query('SELECT COALESCE(SUM(total_amount), 0) AS total, COALESCE(SUM(amount_paid), 0) AS paid FROM clients')->fetch();
-$totalRevenue = (float) $row['total'];
-$paidRevenue = (float) $row['paid'];
-$outstanding = $totalRevenue - $paidRevenue;
+// Revenue (all payments ever received) and expenses.
+$totalRevenue = (float) $pdo->query('SELECT COALESCE(SUM(amount), 0) FROM payments')->fetchColumn();
+$totalExpenses = (float) $pdo->query('SELECT COALESCE(SUM(amount), 0) FROM expenses')->fetchColumn();
+$netProfit = $totalRevenue - $totalExpenses;
+
+// Outstanding balance across every client: total project value minus what
+// each has actually paid, summed (never negative per-client).
+$balanceRows = $pdo->query(
+    "SELECT c.id, c.total_amount, COALESCE(SUM(p.amount), 0) AS paid
+     FROM clients c LEFT JOIN payments p ON p.client_id = c.id
+     GROUP BY c.id, c.total_amount"
+)->fetchAll();
+$outstanding = 0.0;
+foreach ($balanceRows as $row) {
+    $outstanding += max(0, (float) $row['total_amount'] - (float) $row['paid']);
+}
+
+// Monthly revenue vs expenses for the last 12 months. Bucketed in PHP
+// (rather than a DB-specific date-grouping function) so this works
+// identically against MySQL in production.
+$monthsBack = 11;
+$startMonth = date('Y-m-01', strtotime("-$monthsBack months"));
+$monthLabels = [];
+$monthKeys = [];
+for ($i = $monthsBack; $i >= 0; $i--) {
+    $key = date('Y-m', strtotime("-$i months"));
+    $monthKeys[] = $key;
+    $monthLabels[] = date('M \'y', strtotime($key . '-01'));
+}
+$revenueByMonth = array_fill_keys($monthKeys, 0.0);
+$expensesByMonth = array_fill_keys($monthKeys, 0.0);
+
+$stmt = $pdo->prepare('SELECT amount, paid_date FROM payments WHERE paid_date >= ?');
+$stmt->execute([$startMonth]);
+foreach ($stmt->fetchAll() as $row) {
+    $key = substr((string) $row['paid_date'], 0, 7);
+    if (isset($revenueByMonth[$key])) {
+        $revenueByMonth[$key] += (float) $row['amount'];
+    }
+}
+$stmt = $pdo->prepare('SELECT amount, expense_date FROM expenses WHERE expense_date >= ?');
+$stmt->execute([$startMonth]);
+foreach ($stmt->fetchAll() as $row) {
+    $key = substr((string) $row['expense_date'], 0, 7);
+    if (isset($expensesByMonth[$key])) {
+        $expensesByMonth[$key] += (float) $row['amount'];
+    }
+}
 
 $pageTitle = 'Dashboard';
 $activeNav = 'dashboard';
@@ -66,20 +109,33 @@ require __DIR__ . '/includes/layout_top.php';
   <?php endforeach; ?>
 </div>
 
-<div class="section-title"><h2>Revenue overview</h2></div>
+<div class="section-title"><h2>Revenue &amp; expenses</h2></div>
 <div class="grid grid--stats">
   <div class="card stat">
     <strong><?= money($totalRevenue) ?></strong>
-    <span>Total value</span>
+    <span>Total revenue</span>
   </div>
   <div class="card stat">
-    <strong><?= money($paidRevenue) ?></strong>
-    <span>Collected</span>
+    <strong><?= money($totalExpenses) ?></strong>
+    <span>Total expenses</span>
+  </div>
+  <div class="card stat">
+    <strong style="color: <?= $netProfit >= 0 ? '#1f8f6a' : '#c94636' ?>;"><?= money($netProfit) ?></strong>
+    <span>Net profit</span>
   </div>
   <div class="card stat">
     <strong><?= money($outstanding) ?></strong>
-    <span>Outstanding</span>
+    <span>Outstanding balance</span>
   </div>
+</div>
+
+<div class="card" style="margin-top: 1rem;">
+  <canvas id="revenueChart" height="90"></canvas>
+</div>
+
+<div class="section-title"><h2>Pipeline by stage</h2></div>
+<div class="card">
+  <canvas id="pipelineChart" height="90"></canvas>
 </div>
 
 <div class="section-title"><h2>Follow-ups due</h2></div>
@@ -119,5 +175,45 @@ require __DIR__ . '/includes/layout_top.php';
     <?php endforeach; ?>
   <?php endif; ?>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+  const monthLabels = <?= json_encode($monthLabels) ?>;
+  const revenueData = <?= json_encode(array_values($revenueByMonth)) ?>;
+  const expensesData = <?= json_encode(array_values($expensesByMonth)) ?>;
+
+  new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+      labels: monthLabels,
+      datasets: [
+        { label: 'Revenue', data: revenueData, backgroundColor: '#34c79a' },
+        { label: 'Expenses', data: expensesData, backgroundColor: '#ff6b5b' },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Revenue vs. expenses, last 12 months' } },
+      scales: { y: { beginAtZero: true } },
+    },
+  });
+
+  const stageLabels = <?= json_encode(array_values(STAGES)) ?>;
+  const stageData = <?= json_encode(array_values($stageCounts)) ?>;
+
+  new Chart(document.getElementById('pipelineChart'), {
+    type: 'bar',
+    data: {
+      labels: stageLabels,
+      datasets: [{ label: 'Clients', data: stageData, backgroundColor: '#4da3ff' }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } },
+    },
+  });
+</script>
 
 <?php require __DIR__ . '/includes/layout_bottom.php'; ?>

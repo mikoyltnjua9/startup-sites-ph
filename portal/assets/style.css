@@ -357,6 +357,22 @@ td.wrap-cell {
   accent-color: var(--coral);
 }
 
+/* Tasks get extra emphasis — bigger checkboxes, roomier rows, larger type —
+   on top of already sitting in the wider column. */
+.card--tasks .task-item {
+  padding: 1rem 0;
+}
+
+.card--tasks .task-row {
+  gap: 0.9rem;
+  font-size: 1rem;
+}
+
+.card--tasks .task-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+}
+
 .task-row.is-done span {
   text-decoration: line-through;
   color: var(--muted);
